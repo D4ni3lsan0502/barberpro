@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Agendamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-700 {
+            color: #cccccc;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #333333;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .border-blue-500 {
+            border-color: #ffffff;
+        }
+        .text-yellow-400 {
+            color: #ffd700;
+        }
+        .text-gray-900 {
+            color: #ffffff;
+        }
+        .text-gray-600 {
+            color: #aaaaaa;
+        }
+        .border-gray-200 {
+            border-color: #333333;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gray-400 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-200 {
+            background-color: #333333;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:border-blue-500:focus {
+            border-color: #ffffff;
+        }
+        .border-gray-300 {
+            border-color: #333333;
+        }
+        .bg-gray-300 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-500 {
+            background-color: #888888;
+        }
+        .bg-gray-600 {
+            background-color: #666666;
+        }
+        .bg-gray-700 {
+            background-color: #444444;
+        }
+        .bg-gray-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-gray-900 {
+            background-color: #000000;
+        }
+        .text-gray-500 {
+            color: #aaaaaa;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .text-gray-300 {
+            color: #cccccc;
+        }
+        .text-gray-200 {
+            color: #dddddd;
+        }
+        .text-gray-100 {
+            color: #eeeeee;
+        }
+        .text-black {
+            color: #000000;
+        }
+        .text-white {
+            color: #ffffff;
+        }
+        .bg-black {
+            background-color: #000000;
+        }
+        .bg-slate-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-slate-900 {
+            background-color: #000000;
+        }
+        .border-slate-800 {
+            border-color: #333333;
+        }
+        .barber-card {
+            background-color: #1a1a1a;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .text-blue-500 {
+            color: #ffffff;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #333333;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px rgba(255, 255, 255, 0.5);
+        }
+        .text-blue-700 {
+            color: #ffffff;
+        }
+        .bg-blue-100 {
+            background-color: #1a1a1a;
+        }
+        .hover\:bg-blue-200:hover {
+            background-color: #333333;
+        }
+        .text-indigo-600 {
+            color: #ffffff;
+        }
+        .hover\:text-indigo-900:hover {
+            color: #cccccc;
+        }
+        .text-red-600 {
+            color: #ff4500;
+        }
+        .hover\:bg-red-700:hover {
+            background-color: #cc3700;
+        }
+        .focus\:ring-red-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.5);
+        }
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px rgba(255, 69, 0, 0.5);
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .text-white {
+            color: #000000;
+        }
+        .bg-white {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #cccccc;
+        }
+        .text-slate-800 {
+            color: #000000;
+        }
+        .bg-transparent {
+            background-color: transparent;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .hover\:text-blue-600:hover {
+            color: #000000;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gradient-to-r.from-blue-600.to-blue-800 {
+            background-image: none;
+            background-color: #000000;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .hover\:text-white:hover {
+            color: #ffffff;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .text-white {
+            color: #000000;
+        }
+        .bg-white {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #cccccc;
+        }
+        .text-slate-800 {
+            color: #000000;
+        }
+        .bg-transparent {
+            background-color: transparent;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .hover\:text-blue-600:hover {
+            color: #000000;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gradient-to-r.from-blue-600.to-blue-800 {
+            background-image: none;
+            background-color: #000000;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .hover\:text-white:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <!-- Navbar -->
+    <nav class="bg-black shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="img/matheus_costa_barber_logo.png" alt="Matheus Costa Barber Logo" class="h-10 mr-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="relative">
+                        <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
+                            <img src="https://randomuser.me/api/portraits/men/43.jpg" alt="Usuário" class="w-8 h-8 rounded-full">
+                            <span class="hidden md:block text-sm font-medium text-white">Cliente</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                        <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Meu Perfil</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Configurações</a>
+                            <a href="login.html" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Formulário de Agendamento -->
+            <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-white p-6 text-black">
+                    <h1 class="text-2xl font-bold">Agendar Serviço</h1>
+                    <p class="mt-2">Preencha os dados abaixo para agendar seu serviço</p>
+                </div>
+                
+                <div class="p-6">
+                    <form id="agendamento-form">
+                        <!-- Progresso do agendamento -->
+                        <div class="mb-8">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-white" id="etapa-texto">Etapa 1 de 3</span>
+                                <span class="text-sm text-gray-500" id="etapa-descricao">Serviços</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="bg-white h-2.5 rounded-full" id="progress-bar" style="width: 33%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Etapa 1: Seleção de Serviços -->
+                        <div id="etapa-1" class="block">
+                            <h2 class="text-xl font-semibold mb-4">Selecione os Serviços</h2>
+                            
+                            <div class="mb-6">
+                                <div class="flex items-center mb-4">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Barbeiro" class="w-12 h-12 rounded-full border-2 border-white">
+                                    <div class="ml-4">
+                                        <h3 class="text-md font-medium text-white">Matheus Costa</h3>
+                                        <div class="flex text-yellow-400 text-xs">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <span class="text-gray-500 ml-1">(4.5)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-1" name="servicos" value="1" class="servico-checkbox mr-3" data-duracao="30" data-preco="40">
+                                        <div class="flex-1">
+                                            <label for="servico-1" class="block font-medium text-white">Corte Masculino</label>
+                                            <p class="text-sm text-gray-400">Corte tradicional com tesoura ou máquina</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-medium text-white">R$ 40,00</p>
+                                            <p class="text-xs text-gray-400">30 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-2" name="servicos" value="2" class="servico-checkbox mr-3" data-duracao="20" data-preco="30">
+                                        <div class="flex-1">
+                                            <label for="servico-2" class="block font-medium text-white">Barba</label>
+                                            <p class="text-sm text-gray-400">Barba completa com toalha quente</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-medium text-white">R$ 30,00</p>
+                                            <p class="text-xs text-gray-400">20 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-3" name="servicos" value="3" class="servico-checkbox mr-3" data-duracao="15" data-preco="25">
+                                        <div class="flex-1">
+                                            <label for="servico-3" class="block font-medium text-white">Sobrancelha</label>
+                                            <p class="text-sm text-gray-400">Modelagem de sobrancelha</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-medium text-white">R$ 25,00</p>
+                                            <p class="text-xs text-gray-400">15 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-4" name="servicos" value="4" class="servico-checkbox mr-3" data-duracao="60" data-preco="80">
+                                        <div class="flex-1">
+                                            <label for="servico-4" class="block font-medium text-white">Corte + Barba</label>
+                                            <p class="text-sm text-gray-400">Combo corte e barba completa</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-medium text-white">R$ 80,00</p>
+                                            <p class="text-xs text-gray-400">60 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-4 rounded-md mb-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-medium text-white">Total:</p>
+                                        <p id="tempo-total" class="text-xs text-gray-400">0 min</p>
+                                    </div>
+                                    <p id="preco-total" class="text-lg font-semibold text-white">R$ 0,00</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button type="button" id="btn-etapa-1" class="bg-white text-black py-2 px-6 rounded-md hover:bg-gray-300 transition duration-300 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed" disabled>
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Etapa 2: Data e Hora -->
+                        <div id="etapa-2" class="hidden">
+                            <h2 class="text-xl font-semibold mb-4">Escolha a Data e Hora</h2>
+                            
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-white mb-3">Selecione o Tipo de Atendimento</h3>
+                                <div class="flex space-x-4">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="local-barbearia" name="local" value="barbearia" class="mr-2" checked>
+                                        <label for="local-barbearia" class="text-white">Na barbearia</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="radio" id="local-domicilio" name="local" value="domicilio" class="mr-2">
+                                        <label for="local-domicilio" class="text-white">A domicílio</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="endereco-domicilio" class="mb-6 hidden">
+                                <h3 class="text-md font-medium text-white mb-3">Endereço para Atendimento</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div class="md:col-span-2">
+                                        <label for="rua" class="block text-sm font-medium text-gray-300 mb-1">Rua*</label>
+                                        <input type="text" id="rua" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                    <div>
+                                        <label for="numero" class="block text-sm font-medium text-gray-300 mb-1">Número*</label>
+                                        <input type="text" id="numero" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="complemento" class="block text-sm font-medium text-gray-300 mb-1">Complemento</label>
+                                    <input type="text" id="complemento" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white">
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label for="bairro" class="block text-sm font-medium text-gray-300 mb-1">Bairro*</label>
+                                        <input type="text" id="bairro" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                    <div>
+                                        <label for="cidade" class="block text-sm font-medium text-gray-300 mb-1">Cidade*</label>
+                                        <input type="text" id="cidade" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                    <div>
+                                        <label for="estado" class="block text-sm font-medium text-gray-300 mb-1">Estado*</label>
+                                        <select id="estado" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                            <option value="">Selecione</option>
+                                            <option value="AC">AC</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AP">AP</option>
+                                            <option value="AM">AM</option>
+                                            <option value="BA">BA</option>
+                                            <option value="CE">CE</option>
+                                            <option value="DF">DF</option>
+                                            <option value="ES">ES</option>
+                                            <option value="GO">GO</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MT">MT</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MG">MG</option>
+                                            <option value="PA">PA</option>
+                                            <option value="PB">PB</option>
+                                            <option value="PR">PR</option>
+                                            <option value="PE">PE</option>
+                                            <option value="PI">PI</option>
+                                            <option value="RJ">RJ</option>
+                                            <option value="RN">RN</option>
+                                            <option value="RS">RS</option>
+                                            <option value="RO">RO</option>
+                                            <option value="RR">RR</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SP">SP</option>
+                                            <option value="SE">SE</option>
+                                            <option value="TO">TO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-white mb-3">Selecione a Data</h3>
+                                <div class="grid grid-cols-7 gap-2 text-center mb-4">
+                                    <div class="text-gray-400">Dom</div>
+                                    <div class="text-gray-400">Seg</div>
+                                    <div class="text-gray-400">Ter</div>
+                                    <div class="text-gray-400">Qua</div>
+                                    <div class="text-gray-400">Qui</div>
+                                    <div class="text-gray-400">Sex</div>
+                                    <div class="text-gray-400">Sáb</div>
+                                </div>
+                                <div id="calendar" class="grid grid-cols-7 gap-2 text-center"></div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-white mb-3">Horários Disponíveis</h3>
+                                <div id="time-slots" class="grid grid-cols-3 md:grid-cols-5 gap-3"></div>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <button type="button" id="btn-voltar-etapa-1" class="bg-gray-700 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition duration-300">
+                                    Voltar
+                                </button>
+                                <button type="button" id="btn-etapa-2" class="bg-white text-black py-2 px-6 rounded-md hover:bg-gray-300 transition duration-300 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed" disabled>
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 3: Confirmação e Pagamento -->
+                        <div id="etapa-3" class="hidden">
+                            <h2 class="text-xl font-semibold mb-4">Confirmação e Pagamento</h2>
+
+                            <div class="bg-slate-900 p-4 rounded-md mb-6">
+                                <h3 class="text-lg font-medium text-white mb-3">Detalhes do Agendamento</h3>
+                                <p class="text-gray-400 mb-2"><span class="font-medium">Barbeiro:</span> Matheus Costa</p>
+                                <p class="text-gray-400 mb-2"><span class="font-medium">Serviços:</span> <span id="confirm-servicos"></span></p>
+                                <p class="text-gray-400 mb-2"><span class="font-medium">Data:</span> <span id="confirm-data"></span></p>
+                                <p class="text-gray-400 mb-2"><span class="font-medium">Horário:</span> <span id="confirm-horario"></span></p>
+                                <p class="text-gray-400 mb-2"><span class="font-medium">Local:</span> <span id="confirm-local"></span></p>
+                                <p class="text-gray-400 mb-2" id="confirm-endereco-container"><span class="font-medium">Endereço:</span> <span id="confirm-endereco"></span></p>
+                                <p class="text-lg font-semibold text-white mt-4">Total: <span id="confirm-preco-total"></span></p>
+                            </div>
+
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-white mb-3">Informações de Contato</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="nome-cliente" class="block text-sm font-medium text-gray-300 mb-1">Seu Nome Completo*</label>
+                                        <input type="text" id="nome-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                    <div>
+                                        <label for="email-cliente" class="block text-sm font-medium text-gray-300 mb-1">Seu Email*</label>
+                                        <input type="email" id="email-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label for="telefone-cliente" class="block text-sm font-medium text-gray-300 mb-1">Seu Telefone*</label>
+                                        <input type="tel" id="telefone-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white bg-slate-800 text-white" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-white mb-3">Forma de Pagamento</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="radio" id="pagamento-pix" name="pagamento" value="pix" class="mr-2" checked>
+                                        <label for="pagamento-pix" class="text-white">Pix</label>
+                                    </div>
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="radio" id="pagamento-local" name="pagamento" value="local" class="mr-2">
+                                        <label for="pagamento-local" class="text-white">Pagar no Local</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="pix-info" class="bg-slate-900 p-4 rounded-md mb-6">
+                                <h3 class="text-lg font-medium text-white mb-3">Informações para Pagamento via Pix</h3>
+                                <p class="text-gray-400 mb-2">Chave Pix: <span class="font-medium text-white">matheuscosta@pix.com</span></p>
+                                <p class="text-gray-400 mb-2">Valor: <span id="pix-valor" class="font-medium text-white"></span></p>
+                                <p class="text-gray-400 mb-2">QR Code (apenas para demonstração):</p>
+                                <div class="flex justify-center mb-4">
+                                    <img src="https://via.placeholder.com/150" alt="QR Code Pix" class="w-32 h-32 border border-gray-700 rounded-md">
+                                </div>
+                                <p class="text-gray-400 text-sm">Após realizar o pagamento, clique em 
+
