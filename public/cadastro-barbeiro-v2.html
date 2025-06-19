@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentStep = 1;
 
     // --- Seletores de Elementos ---
+
+    // Adiciona botão de voltar na primeira página (Etapa 1)
+    const btnVoltar0 = document.getElementById('btn-voltar-0');
+    if (btnVoltar0) {
+        btnVoltar0.addEventListener('click', () => {
+            window.history.back();
+        });
+    }
     const progressBar = document.getElementById('progress-bar');
     const etapaTexto = document.getElementById('etapa-texto');
     const etapaDescricao = document.getElementById('etapa-descricao');
