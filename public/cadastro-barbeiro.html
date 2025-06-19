@@ -8,6 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css"> 
     <script src="js/localStorage.js"></script>
+    <script>
+      // Adiciona lógica para remover serviço
+      document.addEventListener('DOMContentLoaded', function () {
+        function addRemoveServicoListeners() {
+          document.querySelectorAll('.btn-remove-servico').forEach(btn => {
+            btn.onclick = function () {
+              const item = btn.closest('.servico-item');
+              if (document.querySelectorAll('.servico-item').length > 1) {
+                item.remove();
+              } else {
+                // Limpa campos se for o único
+                item.querySelectorAll('input').forEach(input => input.value = '');
+              }
+            };
+          });
+        }
+        // Inicializa listeners ao carregar
+        addRemoveServicoListeners();
+        // Ao adicionar novo serviço, adiciona listener ao botão de remover
+        const btnAddServico = document.getElementById('btn-add-servico');
+        if (btnAddServico) {
+          btnAddServico.addEventListener('click', () => {
+            setTimeout(addRemoveServicoListeners, 100); // Aguarda DOM atualizar
+          });
+        }
+      });
+    </script>
 </head>
 
 <body class="bg-gray-100 min-h-screen">
