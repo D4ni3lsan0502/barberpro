@@ -157,7 +157,7 @@
         fetch('/api/clientes', {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(usuario)
         })
@@ -167,19 +167,19 @@
         })
         .then(data => {
             // Cadastro localStorage (opcional, pode remover se não quiser duplicidade)
-            const usuarios = JSON.parse(localStorage.getItem('barberpro_user')) || [];
-            usuarios.push(usuario);
-            localStorage.setItem('barberpro_user', JSON.stringify(usuarios));
+            // const usuarios = JSON.parse(localStorage.getItem('barberpro_user')) || [];
+            // usuarios.push(usuario);
+            // localStorage.setItem('barberpro_user', JSON.stringify(usuarios));
             alert('Cadastro realizado com sucesso!');
             window.location.href = 'cliente-dashboard.html';
         })
         .catch(error => {
             alert('Erro ao cadastrar: ' + error.message);
         });
-        const usuarios = JSON.parse(localStorage.getItem('barberpro_user')) || [];
-        usuarios.push(usuario);
-        localStorage.setItem('barberpro_user', JSON.stringify(usuarios));
-        alert('Cadastro realizado com sucesso!');
+    });
+    </script>
+</body>
+</html>
         window.location.href = 'cliente-dashboard.html';
     });
     </script>
