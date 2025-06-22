@@ -31,7 +31,6 @@
                     <div class="mb-4">
                         <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP*</label>
                         <input type="text" id="cep" maxlength="9" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2">
-
                         <div class="flex space-x-2 mb-2">
                             <div class="flex-1">
                                 <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Número*</label>
@@ -42,7 +41,6 @@
                                 <input type="text" id="complemento" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                         </div>
-                        <input type="text" id="cep" maxlength="9" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div class="mb-4">
                         <label for="rua" class="block text-sm font-medium text-gray-700 mb-1">Rua</label>
@@ -107,9 +105,22 @@
     const cidadeInput = document.getElementById('cidade');
     const estadoInput = document.getElementById('estado');
     const senhaInput = document.getElementById('senha');
+    const numeroInput = document.getElementById('numero');
+    const complementoInput = document.getElementById('complemento');
 
     // Navegação entre etapas
     btnEtapa1.addEventListener('click', function() {
+        // Validação básica antes de avançar
+        if (
+            !document.getElementById('nome').value ||
+            !document.getElementById('email').value ||
+            !senhaInput.value ||
+            !cepInput.value ||
+            !numeroInput.value
+        ) {
+            alert('Preencha todos os campos obrigatórios.');
+            return;
+        }
         etapa1.classList.add('hidden');
         etapa2.classList.remove('hidden');
     });
@@ -119,7 +130,7 @@
         etapa1.classList.remove('hidden');
     });
 
-    // CEP automático (exemplo simples, pode ser integrado com API ViaCEP)
+    // CEP automático (ViaCEP)
     cepInput.addEventListener('blur', function() {
         const cep = cepInput.value.replace(/\D/g, '');
         if (cep.length === 8) {
@@ -140,12 +151,25 @@
     document.getElementById('cadastro-cliente-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Validação final
+        if (
+            !document.getElementById('nome').value ||
+            !document.getElementById('email').value ||
+            !senhaInput.value ||
+            !cepInput.value ||
+            !numeroInput.value
+        ) {
+            alert('Preencha todos os campos obrigatórios.');
+            return;
+        }
+
         const usuario = {
-            id: Date.now(),
             nome: document.getElementById('nome').value,
             email: document.getElementById('email').value,
             senha: senhaInput.value,
             cep: cepInput.value,
+            numero: numeroInput.value,
+            complemento: complementoInput.value,
             rua: ruaInput.value,
             bairro: bairroInput.value,
             cidade: cidadeInput.value,
@@ -153,7 +177,6 @@
             atendimento: atendBarbearia.checked ? 'barbearia' : 'domicilio'
         };
 
-        // Envia os dados para o backend (Node.js/Express) que salva no MongoDB
         fetch('/api/clientes', {
             method: 'POST',
             headers: {
@@ -166,21 +189,12 @@
             return response.json();
         })
         .then(data => {
-            // Cadastro localStorage (opcional, pode remover se não quiser duplicidade)
-            // const usuarios = JSON.parse(localStorage.getItem('barberpro_user')) || [];
-            // usuarios.push(usuario);
-            // localStorage.setItem('barberpro_user', JSON.stringify(usuarios));
             alert('Cadastro realizado com sucesso!');
             window.location.href = 'cliente-dashboard.html';
         })
         .catch(error => {
             alert('Erro ao cadastrar: ' + error.message);
         });
-    });
-    </script>
-</body>
-</html>
-        window.location.href = 'cliente-dashboard.html';
     });
     </script>
 </body>
