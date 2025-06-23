@@ -184,8 +184,12 @@
             },
             body: JSON.stringify(usuario)
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Erro ao cadastrar no banco de dados');
+        .then(async response => {
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.log('Erro na resposta:', response.status, errorText);
+                throw new Error('Erro ao cadastrar no banco de dados: ' + errorText);
+            }
             return response.json();
         })
         .then(data => {
@@ -193,6 +197,7 @@
             window.location.href = 'cliente-dashboard.html';
         })
         .catch(error => {
+            console.log('Erro no cadastro:', error);
             alert('Erro ao cadastrar: ' + error.message);
         });
     });

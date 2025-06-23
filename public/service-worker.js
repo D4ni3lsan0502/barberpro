@@ -30,7 +30,8 @@ const ASSETS = [
   '/img/icons/icon-152x152.png',
   '/img/icons/icon-192x192.png',
   '/img/icons/icon-384x384.png',
-  '/img/icons/icon-512x512.png'
+  '/img/icons/icon-512x512.png',
+  '/offline.html' // Certifique-se de ter esta página para fallback offline
 ];
 
 // Instalação do Service Worker
@@ -48,18 +49,11 @@ self.addEventListener('install', event => {
 // Ativação do Service Worker
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
-  self.addEventListener('install', event => {
-  self.skipWaiting();
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(fetch(event.request));
-});
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
+          if (!cacheWhitelist.includes(cacheName)) {
             // Excluir caches antigos
             return caches.delete(cacheName);
           }
@@ -69,45 +63,37 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Estratégia de cache: Cache First, falling back to network
+// Estratégia de cache: Cache First, fallback para network e offline
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - retorna a resposta do cache
         if (response) {
           return response;
         }
-
         // Clone da requisição
         const fetchRequest = event.request.clone();
-
         return fetch(fetchRequest)
-          .then(response => {
+          .then(networkResponse => {
             // Verificar se a resposta é válida
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+              return networkResponse;
             }
-
             // Clone da resposta
-            const responseToCache = response.clone();
-
+            const responseToCache = networkResponse.clone();
             caches.open(CACHE_NAME)
               .then(cache => {
-                // Adicionar requisição ao cache para uso futuro
                 cache.put(event.request, responseToCache);
               });
-
-            return response;
+            return networkResponse;
           })
           .catch(() => {
-            // Se a rede falhar e for uma requisição de página, mostrar página offline
+            // Fallback offline para navegação
             if (event.request.mode === 'navigate') {
               return caches.match('/offline.html');
             }
-            
-            // Para outros recursos, retornar um erro simples
-            return new Response('Sem conexão com a internet');
+            // Para outros recursos, retornar erro simples
+            return new Response('Sem conexão com a internet', { status: 503, statusText: 'Offline' });
           });
       })
   );
@@ -130,22 +116,35 @@ function syncAgendamentos() {
 
 // Notificações push
 self.addEventListener('push', event => {
-  const data = event.data.json();
-  
+  let data = {};
+  try {
+    data = event.data.json();
+  } catch (e) {
+    data = { title: 'Nova notificação', body: '', url: '/' };
+  }
   const options = {
     body: data.body,
     icon: '/img/icons/icon-192x192.png',
     badge: '/img/icons/icon-72x72.png',
     vibrate: [100, 50, 100],
     data: {
-      url: data.url
+      url: data.url || '/'
     }
   };
-
   event.waitUntil(
     self.registration.showNotification(data.title, options)
   );
 });
+
+// Ação ao clicar na notificação
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(event.notification.data.url)
+  );
+});
+   ( self.registration.showNotification(data.title, options)
+  );
 
 // Ação ao clicar na notificação
 self.addEventListener('notificationclick', event => {
