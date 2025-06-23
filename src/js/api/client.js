@@ -14,11 +14,18 @@ const API_BASE_URL = 'http://localhost:3000/api'; // Use a porta que você confi
  */
 async function request(endpoint, options) {
     try {
+        if (typeof fetch !== 'function') {
+            throw new Error('fetch API is not available in this environment.');
+        }
         const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
 
         if (!response.ok) {
-            // Se a resposta não for bem-sucedida, tenta extrair a mensagem de erro da API.
-            const errorData = await response.json();
+            let errorData = {};
+            try {
+                errorData = await response.json();
+            } catch (e) {
+                // Se não for possível converter para JSON, mantém errorData vazio
+            }
             throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
         }
 

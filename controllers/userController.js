@@ -1,4 +1,6 @@
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
+const { User } = require('../models'); // Adjust the path as needed for your project structure
 
 exports.cadastrar = async (req, res, next) => {
   const errors = validationResult(req);

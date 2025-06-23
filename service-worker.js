@@ -143,14 +143,3 @@ self.addEventListener('notificationclick', event => {
     clients.openWindow(event.notification.data.url)
   );
 });
-   ( self.registration.showNotification(data.title, options)
-  );
-
-// Ação ao clicar na notificação
-self.addEventListener('notificationclick', event => {
-  event.notification.close();
-  
-  event.waitUntil(
-    clients.openWindow(event.notification.data.url)
-  );
-});

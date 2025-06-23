@@ -156,7 +156,7 @@ function obterDadosPagamento(barbeiro, formaPagamento) {
 }
 
 // Exportar funções
-export {
+module.exports = {
     necessitaComprovante,
     validarComprovante,
     uploadComprovante,

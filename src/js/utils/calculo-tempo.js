@@ -117,8 +117,8 @@ function gerarHorariosDisponiveis(barbeiro, data, agendamentos, duracaoMinutos) 
     const diasSemana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
     const horarioFuncionamento = barbeiro.horariosFuncionamento[diasSemana[diaSemana]];
     
-    // Verificar se o barbeiro trabalha neste dia
-    if (!horarioFuncionamento.disponivel) {
+    // Verificar se o barbeiro trabalha neste dia ou se o horário está definido
+    if (!horarioFuncionamento || !horarioFuncionamento.disponivel) {
         return horariosDisponiveis; // Retorna array vazio
     }
     

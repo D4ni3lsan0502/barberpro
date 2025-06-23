@@ -57,6 +57,13 @@ function carregarAgendamentos() {
     const usuarioAtual = obterUsuarioLogado();
     if (!usuarioAtual || !usuarioAtual.id) return;
     
+    // Verificar se o AgendamentoStorage está disponível
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.getByBarbeiro !== 'function') {
+        console.error('AgendamentoStorage não está disponível.');
+        renderizarTabelaAgendamentos([]);
+        return;
+    }
+
     // Usar o AgendamentoStorage para buscar agendamentos do barbeiro logado
     const agendamentos = window.BarberPro.AgendamentoStorage.getByBarbeiro(usuarioAtual.id);
     
@@ -240,6 +247,11 @@ function adicionarEventListenersAcoes() {
 // Função para confirmar agendamento
 function confirmarAgendamento(agendamentoId) {
     if (!agendamentoId) return;
+
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.update !== 'function') {
+        exibirNotificacao('AgendamentoStorage não está disponível.', 'error');
+        return;
+    }
     
     // Atualizar status do agendamento
     const atualizado = window.BarberPro.AgendamentoStorage.update(agendamentoId, {
@@ -260,6 +272,11 @@ function confirmarAgendamento(agendamentoId) {
 // Função para cancelar agendamento
 function cancelarAgendamento(agendamentoId) {
     if (!agendamentoId) return;
+
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.update !== 'function') {
+        exibirNotificacao('AgendamentoStorage não está disponível.', 'error');
+        return;
+    }
     
     // Confirmar cancelamento
     if (!confirm('Tem certeza que deseja cancelar este agendamento?')) return;
@@ -283,6 +300,11 @@ function cancelarAgendamento(agendamentoId) {
 // Função para mostrar detalhes do agendamento
 function mostrarDetalhesAgendamento(agendamentoId) {
     if (!agendamentoId) return;
+
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.getAll !== 'function') {
+        exibirNotificacao('AgendamentoStorage não está disponível.', 'error');
+        return;
+    }
     
     // Buscar agendamento
     const agendamentos = window.BarberPro.AgendamentoStorage.getAll();
@@ -444,7 +466,7 @@ function mostrarDetalhesAgendamento(agendamentoId) {
             confirmarAgendamento(id);
         });
     }
-    
+
     // Botão de cancelar no modal
     const btnCancelarModal = modal.querySelector('.btn-cancelar-modal');
     if (btnCancelarModal) {
@@ -454,7 +476,7 @@ function mostrarDetalhesAgendamento(agendamentoId) {
             cancelarAgendamento(id);
         });
     }
-    
+
     // Botão de concluir no modal
     const btnConcluirModal = modal.querySelector('.btn-concluir-modal');
     if (btnConcluirModal) {
@@ -469,6 +491,11 @@ function mostrarDetalhesAgendamento(agendamentoId) {
 // Função para concluir agendamento
 function concluirAgendamento(agendamentoId) {
     if (!agendamentoId) return;
+
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.update !== 'function') {
+        exibirNotificacao('AgendamentoStorage não está disponível.', 'error');
+        return;
+    }
     
     // Atualizar status do agendamento
     const atualizado = window.BarberPro.AgendamentoStorage.update(agendamentoId, {
@@ -573,32 +600,9 @@ function configurarEventListeners() {
             mobileMenu.classList.add('-translate-x-full');
         });
     }
-    
-    // Filtros
-    const filtroStatus = document.getElementById('filtro-status');
-    if (filtroStatus) {
-        filtroStatus.addEventListener('change', function() {
-            aplicarFiltros();
-        });
-    }
-    
-    const filtroData = document.getElementById('filtro-data');
-    if (filtroData) {
-        filtroData.addEventListener('change', function() {
-            aplicarFiltros();
-        });
-    }
-    
-    // Botão de voltar
-    const btnVoltar = document.querySelector('.btn-voltar');
-    if (btnVoltar) {
-        btnVoltar.addEventListener('click', function() {
-            window.location.href = 'barbeiro-dashboard.html';
-        });
-    }
 }
 
-// Função para aplicar filtros
+// Função para aplicar filtros nos agendamentos
 function aplicarFiltros() {
     const filtroStatus = document.getElementById('filtro-status');
     const filtroData = document.getElementById('filtro-data');
@@ -625,11 +629,3 @@ function aplicarFiltros() {
     // Renderizar tabela filtrada
     renderizarTabelaAgendamentos(agendamentos);
 }
-
-// Exportar para uso global
-window.BarberPro = window.BarberPro || {};
-window.BarberPro.AgendamentosBarbeiro = {
-    inicializar: inicializarPagina,
-    carregarAgendamentos: carregarAgendamentos,
-    aplicarFiltros: aplicarFiltros
-};

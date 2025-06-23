@@ -51,13 +51,19 @@ function atualizarInfoBarbeiro(barbeiro) {
 function carregarAgendamentos() {
     const usuarioAtual = obterUsuarioLogado();
     if (!usuarioAtual || !usuarioAtual.id) return;
-    
+
+    // Verificar se o AgendamentoStorage está disponível
+    if (!window.BarberPro || !window.BarberPro.AgendamentoStorage || typeof window.BarberPro.AgendamentoStorage.getByBarbeiro !== 'function') {
+        console.error('AgendamentoStorage não está disponível.');
+        return;
+    }
+
     // Usar o AgendamentoStorage para buscar agendamentos do barbeiro logado
     const agendamentos = window.BarberPro.AgendamentoStorage.getByBarbeiro(usuarioAtual.id);
-    
+
     // Atualizar estatísticas
     atualizarEstatisticas(agendamentos);
-    
+
     // Renderizar tabela de próximos agendamentos
     renderizarTabelaAgendamentos(agendamentos);
 }

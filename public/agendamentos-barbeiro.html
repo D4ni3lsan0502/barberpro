@@ -279,16 +279,15 @@
     <!-- Scripts -->
     <script src="src/js/agendamento-storage.js"></script>
     <script src="src/js/agendamentos-barbeiro.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('-translate-x-full');
+        });
+
+        document.getElementById('close-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('-translate-x-full');
+        });
+    </script>
 </body>
 </html>
-
-
-<script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-        document.getElementById('mobile-menu').classList.toggle('-translate-x-full');
-    });
-
-    document.getElementById('close-menu-button').addEventListener('click', function() {
-        document.getElementById('mobile-menu').classList.add('-translate-x-full');
-    });

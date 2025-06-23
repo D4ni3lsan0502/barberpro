@@ -1,4 +1,210 @@
 // Integração do sistema de agendamentos com interface do usuário
+// Inicializar página de agendamento
+function initAgendamentoPage() {
+  const servicosContainer = document.getElementById('servicos-container');
+  const resumoContainer = document.getElementById('resumo-agendamento');
+  const btnAvancar = document.getElementById('btn-avancar');
+  
+  if (!servicosContainer || !resumoContainer) return;
+  
+  // Carregar serviços disponíveis
+  const servicos = getServicosDisponiveis();
+  
+  // Criar agendamento temporário
+  const agendamentoTemp = {
+    id: 'temp_' + Date.now(),
+    itens: [],
+    valorTotal: 0,
+    duracaoTotal: 0
+  };
+  
+  // Renderizar serviços
+  renderizarServicos(servicos, servicosContainer, agendamentoTemp);
+  
+  // Atualizar resumo quando itens forem alterados
+  atualizarResumo(agendamentoTemp, resumoContainer);
+  
+  // Configurar botão avançar
+  if (btnAvancar) {
+    btnAvancar.addEventListener('click', function() {
+      // Salvar agendamento temporário na sessão
+      sessionStorage.setItem('agendamento_temp', JSON.stringify(agendamentoTemp));
+      
+      // Avançar para próxima etapa
+      window.location.href = 'confirmacao-agendamento.html';
+    });
+    
+    // Desabilitar botão se não houver itens
+    btnAvancar.disabled = agendamentoTemp.itens.length === 0;
+  }
+}
+
+// Inicializar página de confirmação
+function initConfirmacaoPage() {
+  const resumoContainer = document.getElementById('resumo-final');
+  const formPagamento = document.getElementById('form-pagamento');
+  const btnConfirmar = document.getElementById('btn-confirmar');
+  const uploadComprovante = document.getElementById('upload-comprovante');
+  
+  if (!resumoContainer || !formPagamento) return;
+  
+  // Recuperar agendamento temporário
+  const agendamentoTemp = JSON.parse(sessionStorage.getItem('agendamento_temp') || '{"itens":[],"valorTotal":0,"duracaoTotal":0}');
+  
+  // Renderizar resumo final
+  renderizarResumoFinal(agendamentoTemp, resumoContainer);
+  
+  // Configurar formulário de pagamento
+  if (formPagamento) {
+    const metodoPagamento = formPagamento.querySelector('select[name="metodo-pagamento"]');
+    const momentoPagamento = formPagamento.querySelector('select[name="momento-pagamento"]');
+    
+    if (metodoPagamento && momentoPagamento) {
+      // Mostrar/ocultar upload de comprovante com base no método e momento
+      function atualizarFormPagamento() {
+        const metodo = metodoPagamento.value;
+        const momento = momentoPagamento.value;
+        
+        if (uploadComprovante) {
+          if ((metodo === 'pix' || metodo === 'transferencia') && momento !== 'local') {
+            uploadComprovante.classList.remove('hidden');
+            btnConfirmar.disabled = true;
+            btnConfirmar.setAttribute('data-requires-comprovante', 'true');
+          } else {
+            uploadComprovante.classList.add('hidden');
+            btnConfirmar.disabled = false;
+            btnConfirmar.removeAttribute('data-requires-comprovante');
+          }
+        }
+      }
+      
+      metodoPagamento.addEventListener('change', atualizarFormPagamento);
+      momentoPagamento.addEventListener('change', atualizarFormPagamento);
+      
+      // Inicializar estado
+      atualizarFormPagamento();
+    }
+  }
+  
+  // Configurar upload de comprovante
+  if (uploadComprovante) {
+    const inputFile = uploadComprovante.querySelector('input[type="file"]');
+    const previewComprovante = document.getElementById('preview-comprovante');
+    
+    if (inputFile && previewComprovante) {
+      inputFile.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            // Mostrar preview
+            previewComprovante.innerHTML = `
+              <div class="mt-3 p-3 bg-green-50 border border-green-200 rounded-md">
+                <div class="flex items-center">
+                  <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                  <p class="text-green-700">Comprovante enviado com sucesso!</p>
+                </div>
+                <div class="mt-2">
+                  <img src="${e.target.result}" alt="Comprovante" class="max-h-40 rounded-md">
+                </div>
+              </div>
+            `;
+            
+            // Habilitar botão de confirmar
+            if (btnConfirmar && btnConfirmar.hasAttribute('data-requires-comprovante')) {
+              btnConfirmar.disabled = false;
+            }
+            
+            // Salvar comprovante no agendamento temporário
+            agendamentoTemp.comprovante = e.target.result;
+            sessionStorage.setItem('agendamento_temp', JSON.stringify(agendamentoTemp));
+          };
+          
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+    }
+  }
+  
+  // Configurar botão confirmar
+  if (btnConfirmar) {
+    btnConfirmar.addEventListener('click', function() {
+      // Coletar dados do formulário
+      const formData = new FormData(formPagamento);
+      
+      // Completar dados do agendamento
+      agendamentoTemp.metodoPagamento = formData.get('metodo-pagamento');
+      agendamentoTemp.momentoPagamento = formData.get('momento-pagamento');
+      agendamentoTemp.status = 'confirmado';
+      agendamentoTemp.dataConfirmacao = new Date().toISOString();
+      
+      // Obter dados do usuário logado
+      const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
+      agendamentoTemp.clienteId = userData.id || 'cliente_temp';
+      agendamentoTemp.clienteNome = userData.nome || 'Cliente Temporário';
+      
+      // Salvar agendamento permanentemente
+      if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
+        const salvo = window.BarberPro.AgendamentoStorage.add(agendamentoTemp);
+        
+        if (salvo) {
+          // Limpar agendamento temporário
+          sessionStorage.removeItem('agendamento_temp');
+          
+          // Mostrar mensagem de sucesso
+          alert('Agendamento confirmado com sucesso!');
+          
+          // Redirecionar para dashboard
+          window.location.href = 'cliente-dashboard.html';
+        } else {
+          alert('Erro ao salvar agendamento. Tente novamente.');
+        }
+      } else {
+        console.error('Sistema de armazenamento não encontrado');
+        alert('Erro no sistema. Tente novamente mais tarde.');
+      }
+    });
+  }
+}
+
+// Inicializar dashboard do barbeiro
+function initDashboardBarbeiro() {
+  const tabelaAgendamentos = document.getElementById('tabela-agendamentos');
+  
+  if (!tabelaAgendamentos) return;
+  
+  // Obter dados do barbeiro logado
+  const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
+  const barbeiroId = userData.id || 'barbeiro_temp';
+  
+  // Carregar agendamentos do barbeiro
+  if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
+    const agendamentos = window.BarberPro.AgendamentoStorage.getByBarbeiro(barbeiroId);
+    
+    // Renderizar agendamentos
+    renderizarTabelaAgendamentos(agendamentos, tabelaAgendamentos);
+  }
+}
+
+// Inicializar dashboard do cliente
+function initDashboardCliente() {
+  const listaAgendamentos = document.getElementById('lista-agendamentos');
+  
+  if (!listaAgendamentos) return;
+  
+  // Obter dados do cliente logado
+  const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
+  const clienteId = userData.id || 'cliente_temp';
+  
+  // Carregar agendamentos do cliente
+  if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
+    const agendamentos = window.BarberPro.AgendamentoStorage.getByCliente(clienteId);
+    
+    // Renderizar agendamentos
+    renderizarListaAgendamentos(agendamentos, listaAgendamentos);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   // Verificar se estamos na página de agendamento
   const isAgendamentoPage = window.location.pathname.includes('agendamento.html');
@@ -16,298 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } else if (isDashboardCliente) {
     initDashboardCliente();
   }
-  
-  // Inicializar página de agendamento
-  function initAgendamentoPage() {
-    const servicosContainer = document.getElementById('servicos-container');
-    const resumoContainer = document.getElementById('resumo-agendamento');
-    const btnAvancar = document.getElementById('btn-avancar');
-    
-    if (!servicosContainer || !resumoContainer) return;
-    
-    // Carregar serviços disponíveis
-    const servicos = getServicosDisponiveis();
-    
-    // Criar agendamento temporário
-    const agendamentoTemp = {
-      id: 'temp_' + Date.now(),
-      itens: [],
-      valorTotal: 0,
-      duracaoTotal: 0
-    };
-    
-    // Renderizar serviços
-    renderizarServicos(servicos, servicosContainer, agendamentoTemp);
-    
-    // Atualizar resumo quando itens forem alterados
-    atualizarResumo(agendamentoTemp, resumoContainer);
-    
-    // Configurar botão avançar
-    if (btnAvancar) {
-      btnAvancar.addEventListener('click', function() {
-        // Salvar agendamento temporário na sessão
-        sessionStorage.setItem('agendamento_temp', JSON.stringify(agendamentoTemp));
-        
-        // Avançar para próxima etapa
-        window.location.href = 'confirmacao-agendamento.html';
-      });
-      
-      // Desabilitar botão se não houver itens
-      btnAvancar.disabled = agendamentoTemp.itens.length === 0;
-    }
-  }
-  
-  // Inicializar página de confirmação
-  function initConfirmacaoPage() {
-    const resumoContainer = document.getElementById('resumo-final');
-    const formPagamento = document.getElementById('form-pagamento');
-    const btnConfirmar = document.getElementById('btn-confirmar');
-    const uploadComprovante = document.getElementById('upload-comprovante');
-    
-    if (!resumoContainer || !formPagamento) return;
-    
-    // Recuperar agendamento temporário
-    const agendamentoTemp = JSON.parse(sessionStorage.getItem('agendamento_temp') || '{"itens":[],"valorTotal":0,"duracaoTotal":0}');
-    
-    // Renderizar resumo final
-    renderizarResumoFinal(agendamentoTemp, resumoContainer);
-    
-    // Configurar formulário de pagamento
-    if (formPagamento) {
-      const metodoPagamento = formPagamento.querySelector('select[name="metodo-pagamento"]');
-      const momentoPagamento = formPagamento.querySelector('select[name="momento-pagamento"]');
-      
-      if (metodoPagamento && momentoPagamento) {
-        // Mostrar/ocultar upload de comprovante com base no método e momento
-        function atualizarFormPagamento() {
-          const metodo = metodoPagamento.value;
-          const momento = momentoPagamento.value;
-          
-          if (uploadComprovante) {
-            if ((metodo === 'pix' || metodo === 'transferencia') && momento !== 'local') {
-              uploadComprovante.classList.remove('hidden');
-              btnConfirmar.disabled = true;
-              btnConfirmar.setAttribute('data-requires-comprovante', 'true');
-            } else {
-              uploadComprovante.classList.add('hidden');
-              btnConfirmar.disabled = false;
-              btnConfirmar.removeAttribute('data-requires-comprovante');
-            }
-          }
-        }
-        
-        metodoPagamento.addEventListener('change', atualizarFormPagamento);
-        momentoPagamento.addEventListener('change', atualizarFormPagamento);
-        
-        // Inicializar estado
-        atualizarFormPagamento();
-      }
-    }
-    
-    // Configurar upload de comprovante
-    if (uploadComprovante) {
-      const inputFile = uploadComprovante.querySelector('input[type="file"]');
-      const previewComprovante = document.getElementById('preview-comprovante');
-      
-      if (inputFile && previewComprovante) {
-        inputFile.addEventListener('change', function(e) {
-          if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-              // Mostrar preview
-              previewComprovante.innerHTML = `
-                <div class="mt-3 p-3 bg-green-50 border border-green-200 rounded-md">
-                  <div class="flex items-center">
-                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                    <p class="text-green-700">Comprovante enviado com sucesso!</p>
-                  </div>
-                  <div class="mt-2">
-                    <img src="${e.target.result}" alt="Comprovante" class="max-h-40 rounded-md">
-                  </div>
-                </div>
-              `;
-              
-              // Habilitar botão de confirmar
-              if (btnConfirmar && btnConfirmar.hasAttribute('data-requires-comprovante')) {
-                btnConfirmar.disabled = false;
-              }
-              
-              // Salvar comprovante no agendamento temporário
-              agendamentoTemp.comprovante = e.target.result;
-              sessionStorage.setItem('agendamento_temp', JSON.stringify(agendamentoTemp));
-            };
-            
-            reader.readAsDataURL(e.target.files[0]);
-          }
-        });
-      }
-    }
-    
-    // Configurar botão confirmar
-    if (btnConfirmar) {
-      btnConfirmar.addEventListener('click', function() {
-        // Coletar dados do formulário
-        const formData = new FormData(formPagamento);
-        
-        // Completar dados do agendamento
-        agendamentoTemp.metodoPagamento = formData.get('metodo-pagamento');
-        agendamentoTemp.momentoPagamento = formData.get('momento-pagamento');
-        agendamentoTemp.status = 'confirmado';
-        agendamentoTemp.dataConfirmacao = new Date().toISOString();
-        
-        // Obter dados do usuário logado
-        const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
-        agendamentoTemp.clienteId = userData.id || 'cliente_temp';
-        agendamentoTemp.clienteNome = userData.nome || 'Cliente Temporário';
-        
-        // Salvar agendamento permanentemente
-        if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
-          const salvo = window.BarberPro.AgendamentoStorage.add(agendamentoTemp);
-          
-          if (salvo) {
-            // Limpar agendamento temporário
-            sessionStorage.removeItem('agendamento_temp');
-            
-            // Mostrar mensagem de sucesso
-            alert('Agendamento confirmado com sucesso!');
-            
-            // Redirecionar para dashboard
-            window.location.href = 'cliente-dashboard.html';
-          } else {
-            alert('Erro ao salvar agendamento. Tente novamente.');
-          }
-        } else {
-          console.error('Sistema de armazenamento não encontrado');
-          alert('Erro no sistema. Tente novamente mais tarde.');
-        }
-      });
-    }
-  }
-  
-  // Inicializar dashboard do barbeiro
-  function initDashboardBarbeiro() {
-    const tabelaAgendamentos = document.getElementById('tabela-agendamentos');
-    
-    if (!tabelaAgendamentos) return;
-    
-    // Obter dados do barbeiro logado
-    const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
-    const barbeiroId = userData.id || 'barbeiro_temp';
-    
-    // Carregar agendamentos do barbeiro
-    if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
-      const agendamentos = window.BarberPro.AgendamentoStorage.getByBarbeiro(barbeiroId);
-      
-      // Renderizar agendamentos
-      renderizarTabelaAgendamentos(agendamentos, tabelaAgendamentos);
-    }
-  }
-  
-  // Inicializar dashboard do cliente
-  function initDashboardCliente() {
-    const listaAgendamentos = document.getElementById('lista-agendamentos');
-    
-    if (!listaAgendamentos) return;
-    
-    // Obter dados do cliente logado
-    const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
-    const clienteId = userData.id || 'cliente_temp';
-    
-    // Carregar agendamentos do cliente
-    if (window.BarberPro && window.BarberPro.AgendamentoStorage) {
-      const agendamentos = window.BarberPro.AgendamentoStorage.getByCliente(clienteId);
-      
-      // Renderizar agendamentos
-      renderizarListaAgendamentos(agendamentos, listaAgendamentos);
-    }
-  }
-  
-  // Função para renderizar serviços disponíveis
-  function renderizarServicos(servicos, container, agendamentoTemp) {
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    servicos.forEach(servico => {
-      const servicoCard = document.createElement('div');
-      servicoCard.className = 'service-card bg-white rounded-lg shadow-md p-4 mb-4 transition-all';
-      
-      // Verificar se o serviço já está no agendamento
-      const itemExistente = agendamentoTemp.itens.find(item => item.id === servico.id);
-      const quantidade = itemExistente ? itemExistente.quantidade : 0;
-      
-      servicoCard.innerHTML = `
-        <div class="flex justify-between items-start">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-800">${servico.nome}</h3>
-            <p class="text-gray-600 mt-1">${servico.descricao}</p>
-            <div class="flex items-center mt-2">
-              <span class="text-blue-600 font-semibold">R$ ${servico.preco.toFixed(2)}</span>
-              <span class="mx-2 text-gray-400">|</span>
-              <span class="text-gray-600">${servico.duracao} min</span>
-            </div>
-          </div>
-          <div class="flex items-center">
-            <button class="btn-quantidade ${quantidade === 0 ? 'opacity-50' : ''}" data-action="diminuir" data-id="${servico.id}" ${quantidade === 0 ? 'disabled' : ''}>
-              <i class="fas fa-minus text-blue-600"></i>
-            </button>
-            <span class="quantidade-display mx-3 text-lg font-semibold w-6 text-center">${quantidade}</span>
-            <button class="btn-quantidade" data-action="aumentar" data-id="${servico.id}">
-              <i class="fas fa-plus text-blue-600"></i>
-            </button>
-          </div>
-        </div>
-      `;
-      
-      container.appendChild(servicoCard);
-      
-      // Configurar botões de quantidade
-      const btnDiminuir = servicoCard.querySelector('[data-action="diminuir"]');
-      const btnAumentar = servicoCard.querySelector('[data-action="aumentar"]');
-      const quantidadeDisplay = servicoCard.querySelector('.quantidade-display');
-      
-      btnDiminuir.addEventListener('click', function() {
-        if (quantidade > 0) {
-          atualizarQuantidadeServico(servico, agendamentoTemp, quantidade - 1);
-          quantidadeDisplay.textContent = quantidade - 1;
-          
-          if (quantidade - 1 === 0) {
-            btnDiminuir.disabled = true;
-            btnDiminuir.classList.add('opacity-50');
-          }
-          
-          // Atualizar resumo
-          atualizarResumo(agendamentoTemp, document.getElementById('resumo-agendamento'));
-          
-          // Atualizar estado do botão avançar
-          const btnAvancar = document.getElementById('btn-avancar');
-          if (btnAvancar) {
-            btnAvancar.disabled = agendamentoTemp.itens.length === 0;
-          }
-        }
-      });
-      
-      btnAumentar.addEventListener('click', function() {
-        atualizarQuantidadeServico(servico, agendamentoTemp, quantidade + 1);
-        quantidadeDisplay.textContent = quantidade + 1;
-        
-        if (quantidade === 0) {
-          btnDiminuir.disabled = false;
-          btnDiminuir.classList.remove('opacity-50');
-        }
-        
-        // Atualizar resumo
-        atualizarResumo(agendamentoTemp, document.getElementById('resumo-agendamento'));
-        
-        // Atualizar estado do botão avançar
-        const btnAvancar = document.getElementById('btn-avancar');
-        if (btnAvancar) {
-          btnAvancar.disabled = false;
-        }
-      });
-    });
-  }
+});
   
   // Função para atualizar quantidade de serviço no agendamento
   function atualizarQuantidadeServico(servico, agendamento, novaQuantidade) {
@@ -683,7 +598,6 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'confirmado': return 'paid';
       case 'concluido': return 'paid';
       case 'cancelado': return 'canceled';
-      default: return 'pending';
-    }
+    default: return 'pending';
   }
-});
+}

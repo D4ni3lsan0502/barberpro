@@ -5,6 +5,15 @@ window.BarberPro = window.BarberPro || {};
 
 // Módulo de navegação
 window.BarberPro.Navigation = (function() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return {
+            init: function() {},
+            navigateTo: function() {},
+            goBack: function() {},
+            getUrlParams: function() { return {}; },
+            pages: {}
+        };
+    }
     // Armazenar referências de páginas
     const pages = {
         login: 'login.html',

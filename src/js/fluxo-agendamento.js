@@ -165,52 +165,56 @@ function inicializarFluxoAgendamento(config) {
     let dadosComprovante = null;
     
     // Atualizar interface quando a forma de pagamento mudar
-    formaPagamentoSelect.addEventListener('change', () => {
-        const formaPagamento = formaPagamentoSelect.value;
-        const momentoPagamento = momentoPagamentoSelect.value;
-        
-        atualizarInterfacePagamento(formaPagamento, momentoPagamento, {
-            secaoComprovante,
-            secaoDadosPix,
-            secaoDadosTransferencia,
-            botaoConfirmar,
-            mensagemComprovante
+    if (formaPagamentoSelect) {
+        formaPagamentoSelect.addEventListener('change', () => {
+            const formaPagamento = formaPagamentoSelect.value;
+            const momentoPagamento = momentoPagamentoSelect.value;
+            
+            atualizarInterfacePagamento(formaPagamento, momentoPagamento, {
+                secaoComprovante,
+                secaoDadosPix,
+                secaoDadosTransferencia,
+                botaoConfirmar,
+                mensagemComprovante
+            });
+            
+            // Resetar estado do comprovante
+            comprovanteEnviado = false;
+            dadosComprovante = null;
+            if (inputComprovante) inputComprovante.value = '';
+            if (nomeArquivo) nomeArquivo.textContent = 'Nenhum arquivo selecionado';
+            if (botaoEnviarComprovante) botaoEnviarComprovante.disabled = true;
+            
+            // Atualizar estado do botão de confirmação
+            gerenciarBotaoConfirmacao(formaPagamento, momentoPagamento, comprovanteEnviado, botaoConfirmar);
         });
-        
-        // Resetar estado do comprovante
-        comprovanteEnviado = false;
-        dadosComprovante = null;
-        if (inputComprovante) inputComprovante.value = '';
-        if (nomeArquivo) nomeArquivo.textContent = 'Nenhum arquivo selecionado';
-        if (botaoEnviarComprovante) botaoEnviarComprovante.disabled = true;
-        
-        // Atualizar estado do botão de confirmação
-        gerenciarBotaoConfirmacao(formaPagamento, momentoPagamento, comprovanteEnviado, botaoConfirmar);
-    });
+    }
     
     // Atualizar interface quando o momento de pagamento mudar
-    momentoPagamentoSelect.addEventListener('change', () => {
-        const formaPagamento = formaPagamentoSelect.value;
-        const momentoPagamento = momentoPagamentoSelect.value;
-        
-        atualizarInterfacePagamento(formaPagamento, momentoPagamento, {
-            secaoComprovante,
-            secaoDadosPix,
-            secaoDadosTransferencia,
-            botaoConfirmar,
-            mensagemComprovante
+    if (momentoPagamentoSelect) {
+        momentoPagamentoSelect.addEventListener('change', () => {
+            const formaPagamento = formaPagamentoSelect.value;
+            const momentoPagamento = momentoPagamentoSelect.value;
+            
+            atualizarInterfacePagamento(formaPagamento, momentoPagamento, {
+                secaoComprovante,
+                secaoDadosPix,
+                secaoDadosTransferencia,
+                botaoConfirmar,
+                mensagemComprovante
+            });
+            
+            // Resetar estado do comprovante
+            comprovanteEnviado = false;
+            dadosComprovante = null;
+            if (inputComprovante) inputComprovante.value = '';
+            if (nomeArquivo) nomeArquivo.textContent = 'Nenhum arquivo selecionado';
+            if (botaoEnviarComprovante) botaoEnviarComprovante.disabled = true;
+            
+            // Atualizar estado do botão de confirmação
+            gerenciarBotaoConfirmacao(formaPagamento, momentoPagamento, comprovanteEnviado, botaoConfirmar);
         });
-        
-        // Resetar estado do comprovante
-        comprovanteEnviado = false;
-        dadosComprovante = null;
-        if (inputComprovante) inputComprovante.value = '';
-        if (nomeArquivo) nomeArquivo.textContent = 'Nenhum arquivo selecionado';
-        if (botaoEnviarComprovante) botaoEnviarComprovante.disabled = true;
-        
-        // Atualizar estado do botão de confirmação
-        gerenciarBotaoConfirmacao(formaPagamento, momentoPagamento, comprovanteEnviado, botaoConfirmar);
-    });
+    }
     
     // Gerenciar seleção de arquivo
     if (inputComprovante) {

@@ -33,7 +33,7 @@ exports.deletar = async (req, res, next) => {
       return res.status(403).json({ message: 'Não autorizado' });
     }
 
-    await service.deleteOne();
+    await service.remove();
     res.json({ message: 'Serviço deletado' });
   } catch (err) {
     next(err);

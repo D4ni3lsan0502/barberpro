@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <!-- Corrige o caminho do CSS -->
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberPro - Dashboard do Cliente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="public/css/styles.css">
+    <!-- <link rel="stylesheet" href="public/css/styles.css"> -->
     <script>
         // Corrige o fechamento do menu ao clicar nos links de menu
         document.addEventListener('DOMContentLoaded', function() {
@@ -149,16 +149,8 @@
    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar login
-            const novoUsuario = {
-  id: 'cliente_' + Date.now(), // ou outro id único
-  nome: nomeInput.value,
-  tipo: 'cliente',
-  // ...outros campos...
-};
-localStorage.setItem('barberpro_user', JSON.stringify(novoUsuario));
-window.location.href = 'cliente-dashboard.html'
-           const userData = JSON.parse(localStorage.getItem('usuario') || '{}');
+// Verificar login
+const userData = JSON.parse(localStorage.getItem('barberpro_user') || '{}');
 if (!userData.id || userData.tipo !== 'cliente') {
     window.location.href = 'login.html';
     return;

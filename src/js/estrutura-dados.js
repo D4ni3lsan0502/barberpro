@@ -1,116 +1,100 @@
 // Estrutura de dados para o BarberPro
 
 // Estrutura para Barbeiro
+/**
+ * @typedef {Object} BarbeiroDadosEstrutura
+ * @property {string} id
+ * @property {string} nome
+ * @property {string} email
+ * @property {string} senha
+ * @property {string} telefone
+ * @property {string} foto
+ * @property {string[]} especialidades
+ * @property {string} descricao
+ * @property {number} experiencia
+ * @property {{barbearia: boolean, domicilio: boolean, raioAtendimentoDomicilio: number}} tiposAtendimento
+ * @property {{rua: string, numero: string, complemento: string, bairro: string, cidade: string, estado: string, cep: string, coordenadas: {latitude: number, longitude: number}}} endereco
+ * @property {string} contatoPreferencial
+ * @property {{instagram: string, facebook: string, twitter: string}} redesSociais
+ * @property {{dinheiro: boolean, pix: boolean, cartaoCredito: boolean, cartaoDebito: boolean, transferencia: boolean}} formasPagamento
+ * @property {{antecipado50: boolean, antecipado100: boolean, noAtendimento: boolean}} momentoPagamento
+ * @property {{diaSemana: number, inicio: string, fim: string, intervalo: {inicio: string, fim: string}}[]} horarioTrabalho
+ * @property {{id: string, nome: string, descricao: string, preco: number, duracao: number, disponivel: boolean}[]} servicos
+ * @property {{intervaloEntreAgendamentos: number, antecedenciaMinima: number, antecedenciaMaxima: number, permiteCancelamento: boolean, tempoMinimoCancelamento: number}} configuracoesAgendamento
+ * @property {{clientesAtendidos: number, avaliacaoMedia: number, faturamentoMensal: number}} estatisticas
+ * @property {{email: boolean, sms: boolean, push: boolean}} notificacoes
+ * @property {Date} dataCadastro
+ * @property {Date} ultimoAcesso
+ */
+
+/** @type {BarbeiroDadosEstrutura} */
 const barbeiroDadosEstrutura = {
-  // Dados pessoais
-  id: "string", // Identificador único
-  nome: "string",
-  email: "string",
-  senha: "string (hash)",
-  telefone: "string",
-  foto: "string (URL)",
-  
-  // Dados profissionais
-  especialidades: ["string"], // Ex: ["Corte masculino", "Barba", "Sobrancelha"]
-  descricao: "string", // Biografia/descrição profissional
-  experiencia: "number", // Anos de experiência
-  
-  // Configurações de atendimento
+  id: "",
+  nome: "",
+  email: "",
+  senha: "",
+  telefone: "",
+  foto: "",
+  especialidades: [],
+  descricao: "",
+  experiencia: 0,
   tiposAtendimento: {
-    barbearia: "boolean",
-    domicilio: "boolean",
-    raioAtendimentoDomicilio: "number" // Em km
+    barbearia: false,
+    domicilio: false,
+    raioAtendimentoDomicilio: 0
   },
-  
-  // Endereço do estabelecimento (se aplicável)
   endereco: {
-    rua: "string",
-    numero: "string",
-    complemento: "string",
-    bairro: "string",
-    cidade: "string",
-    estado: "string",
-    cep: "string",
+    rua: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    cep: "",
     coordenadas: {
-      latitude: "number",
-      longitude: "number"
+      latitude: 0,
+      longitude: 0
     }
   },
-  
-  // Formas de contato
-  contatoPreferencial: "string", // Ex: "whatsapp", "telefone", "email"
+  contatoPreferencial: "",
   redesSociais: {
-    instagram: "string",
-    facebook: "string",
-    twitter: "string"
+    instagram: "",
+    facebook: "",
+    twitter: ""
   },
-  
-  // Configurações de pagamento
   formasPagamento: {
-    dinheiro: "boolean",
-    pix: "boolean",
-    cartaoCredito: "boolean",
-    cartaoDebito: "boolean",
-    transferencia: "boolean"
+    dinheiro: false,
+    pix: false,
+    cartaoCredito: false,
+    cartaoDebito: false,
+    transferencia: false
   },
-  
-  // Opções de momento do pagamento
   momentoPagamento: {
-    antecipado50: "boolean", // 50% antecipado
-    antecipado100: "boolean", // 100% antecipado
-    noAtendimento: "boolean" // Pagamento no momento do atendimento
+    antecipado50: false,
+    antecipado100: false,
+    noAtendimento: false
   },
-  
-  // Horários de trabalho
-  horarioTrabalho: [
-    {
-      diaSemana: "number", // 0-6 (domingo-sábado)
-      inicio: "string", // Ex: "08:00"
-      fim: "string", // Ex: "18:00"
-      intervalo: {
-        inicio: "string", // Ex: "12:00"
-        fim: "string" // Ex: "13:00"
-      }
-    }
-  ],
-  
-  // Serviços oferecidos
-  servicos: [
-    {
-      id: "string",
-      nome: "string",
-      descricao: "string",
-      preco: "number",
-      duracao: "number", // Em minutos
-      disponivel: "boolean"
-    }
-  ],
-  
-  // Configurações de agendamento
+  horarioTrabalho: [],
+  servicos: [],
   configuracoesAgendamento: {
-    intervaloEntreAgendamentos: "number", // Em minutos
-    antecedenciaMinima: "number", // Em horas
-    antecedenciaMaxima: "number", // Em dias
-    permiteCancelamento: "boolean",
-    tempoMinimoCancelamento: "number" // Em horas
+    intervaloEntreAgendamentos: 0,
+    antecedenciaMinima: 0,
+    antecedenciaMaxima: 0,
+    permiteCancelamento: false,
+    tempoMinimoCancelamento: 0
   },
-  
-  // Estatísticas
   estatisticas: {
-    clientesAtendidos: "number",
-    avaliacaoMedia: "number",
-    faturamentoMensal: "number"
+    clientesAtendidos: 0,
+    avaliacaoMedia: 0,
+    faturamentoMensal: 0
   },
-  
-  // Preferências de notificação
   notificacoes: {
-    email: "boolean",
-    sms: "boolean",
-    push: "boolean"
+    email: false,
+    sms: false,
+    push: false
   },
-  
-  dataCadastro: "date",
-  ultimoAcesso: "date"
+  dataCadastro: new Date(),
+  ultimoAcesso: new Date()
 };
 
 // Estrutura para Cliente

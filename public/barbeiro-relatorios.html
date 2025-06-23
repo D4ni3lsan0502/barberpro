@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberPro - Relatórios do Barbeiro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -309,51 +310,51 @@
 
     <!-- Notificação -->
     <div class="notificacao fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 translate-x-full"></div>
-
     <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menu mobile
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const closeMenuButton = document.getElementById('close-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.remove('-translate-x-full');
-                });
-            }
-            
-            if (closeMenuButton && mobileMenu) {
-                closeMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.add('-translate-x-full');
-                });
-            }
-            
-            // Verificar usuário logado
-            const usuarioJSON = localStorage.getItem('barberpro_usuario_logado');
-            if (!usuarioJSON) {
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('-translate-x-full');
+            });
+        }
+        
+        if (closeMenuButton && mobileMenu) {
+            closeMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.add('-translate-x-full');
+            });
+        }
+        
+        // Verificar usuário logado
+        const usuarioJSON = localStorage.getItem('barberpro_usuario_logado');
+        if (!usuarioJSON) {
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        try {
+            const usuario = JSON.parse(usuarioJSON);
+            if (usuario.tipo !== 'barbeiro') {
                 window.location.href = 'login.html';
                 return;
             }
             
-            try {
-                const usuario = JSON.parse(usuarioJSON);
-                if (usuario.tipo !== 'barbeiro') {
-                    window.location.href = 'login.html';
-                    return;
-                }
-                
-                // Atualizar informações do barbeiro
-                const elementosNomeBarbeiro = document.querySelectorAll('.nome-barbeiro');
-                elementosNomeBarbeiro.forEach(elemento => {
-                    if (elemento) elemento.textContent = usuario.nome || 'Barbeiro';
-                });
-            } catch (e) {
-                console.error('Erro ao verificar usuário:', e);
-                window.location.href = 'login.html';
-            }
-        });
-    </script>
-</body>
+            // Atualizar informações do barbeiro
+            const elementosNomeBarbeiro = document.querySelectorAll('.nome-barbeiro');
+            elementosNomeBarbeiro.forEach(elemento => {
+                if (elemento) elemento.textContent = usuario.nome || 'Barbeiro';
+            });
+        } catch (e) {
+            console.error('Erro ao verificar usuário:', e);
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+</html>
 </html>

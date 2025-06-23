@@ -303,4 +303,10 @@ window.BarberPro.Validator = (function() {
 })();
 
 // Inicializar automaticamente
-window.BarberPro.Validator.init();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        window.BarberPro.Validator.init();
+    });
+} else {
+    window.BarberPro.Validator.init();
+}

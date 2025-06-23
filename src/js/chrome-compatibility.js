@@ -69,7 +69,14 @@ function initializeBarberPro() {
   console.log('Navegador detectado:', browser);
   
   // Adicionar classe ao body para estilos específicos por navegador
-  document.body.classList.add(`browser-${browser}`);
+  if (document.body) {
+    document.body.classList.add(`browser-${browser}`);
+  } else {
+    // Se body ainda não está disponível, aguardar até que esteja
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add(`browser-${browser}`);
+    });
+  }
   
   // Verificar localStorage
   if (!isLocalStorageAvailable()) {
@@ -87,10 +94,16 @@ function initializeBarberPro() {
           <p class="text-sm">Armazenamento local não disponível. Algumas funcionalidades podem não funcionar corretamente.</p>
         </div>
         <div class="ml-auto pl-3">
-          <button class="inline-flex text-red-700">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+    if (document.body) {
+      document.body.appendChild(alertElement);
+    } else {
+      window.addEventListener('DOMContentLoaded', () => {
+        document.body.appendChild(alertElement);
+      });
+    }
+    
+    // Configurar botão de fechar
+    const closeButton = alertElement.querySelector('button');
       </div>
     `;
     

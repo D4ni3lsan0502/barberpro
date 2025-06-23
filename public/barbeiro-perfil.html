@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberPro - Perfil do Barbeiro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -366,199 +367,200 @@
             </div>
         </div>
     </footer>
-
     <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // User menu toggle
-            const userMenuButton = document.getElementById('user-menu-button');
-            const userMenu = document.getElementById('user-menu');
-            
-            userMenuButton.addEventListener('click', function() {
-                userMenu.classList.toggle('hidden');
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
-                    userMenu.classList.add('hidden');
-                }
-            });
-            
-            // Service selection
-            const serviceButtons = document.querySelectorAll('.bg-blue-600');
-            const selectedServices = document.getElementById('selected-services');
-            const serviceList = document.getElementById('service-list');
-            const subtotalElement = document.getElementById('subtotal');
-            const totalElement = document.getElementById('total');
-            const btnAgendar = document.getElementById('btn-agendar');
-            
-            let selectedServicesArray = [];
-            
-            serviceButtons.forEach((button, index) => {
-                if (index < 5) { // Only the first 5 buttons are service buttons
-                    button.addEventListener('click', function() {
-                        const serviceCard = this.closest('.bg-white');
-                        const serviceName = serviceCard.querySelector('h3').textContent;
-                        const servicePrice = serviceCard.querySelector('.text-lg.font-semibold').textContent;
-                        const serviceDuration = serviceCard.querySelector('.text-xs.bg-gray-100').textContent;
-                        
-                        // Check if service is already selected
-                        const existingService = selectedServicesArray.find(service => service.name === serviceName);
-                        
-                        if (!existingService) {
-                            // Add service to array
-                            selectedServicesArray.push({
-                                name: serviceName,
-                                price: servicePrice,
-                                duration: serviceDuration
-                            });
-                            
-                            // Update UI
-                            updateSelectedServices();
-                        }
-                    });
-                }
-            });
-            
-            function updateSelectedServices() {
-                if (selectedServicesArray.length > 0) {
-                    selectedServices.querySelector('p').classList.add('hidden');
-                    serviceList.classList.remove('hidden');
-                    
-                    // Clear service list
-                    serviceList.innerHTML = '';
-                    
-                    // Add each service to the list
-                    let subtotal = 0;
-                    
-                    selectedServicesArray.forEach(service => {
-                        const serviceItem = document.createElement('div');
-                        serviceItem.className = 'flex justify-between items-center bg-gray-50 p-2 rounded';
-                        
-                        const priceValue = parseFloat(service.price.replace('R$ ', '').replace(',', '.'));
-                        subtotal += priceValue;
-                        
-                        serviceItem.innerHTML = `
-                            <div>
-                                <p class="text-sm font-medium">${service.name}</p>
-                                <p class="text-xs text-gray-500">${service.duration}</p>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-sm font-medium mr-2">${service.price}</span>
-                                <button class="text-red-500 hover:text-red-700" data-service="${service.name}">
-                                    <i class="fas fa-times-circle"></i>
-                                </button>
-                            </div>
-                        `;
-                        
-                        serviceList.appendChild(serviceItem);
-                        
-                        // Add remove button event
-                        const removeButton = serviceItem.querySelector(`button[data-service="${service.name}"]`);
-                        removeButton.addEventListener('click', function() {
-                            const serviceName = this.getAttribute('data-service');
-                            selectedServicesArray = selectedServicesArray.filter(service => service.name !== serviceName);
-                            updateSelectedServices();
-                        });
-                    });
-                    
-                    // Update subtotal and total
-                    subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-                    totalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-                    
-                    // Enable booking button
-                    btnAgendar.disabled = false;
-                } else {
-                    selectedServices.querySelector('p').classList.remove('hidden');
-                    serviceList.classList.add('hidden');
-                    
-                    // Reset subtotal and total
-                    subtotalElement.textContent = 'R$ 0,00';
-                    totalElement.textContent = 'R$ 0,00';
-                    
-                    // Disable booking button
-                    btnAgendar.disabled = true;
-                }
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // User menu toggle
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+        
+        userMenuButton.addEventListener('click', function() {
+            userMenu.classList.toggle('hidden');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                userMenu.classList.add('hidden');
             }
-            
-            // Time slot selection
-            const timeSlots = document.querySelectorAll('.time-slot');
-            
-            timeSlots.forEach(slot => {
-                slot.addEventListener('click', function() {
-                    // Remove selected class from all time slots
-                    timeSlots.forEach(s => {
-                        s.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
-                    });
+        });
+        
+        // Service selection
+        const serviceButtons = document.querySelectorAll('.bg-blue-600');
+        const selectedServices = document.getElementById('selected-services');
+        const serviceList = document.getElementById('service-list');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('total');
+        const btnAgendar = document.getElementById('btn-agendar');
+        
+        let selectedServicesArray = [];
+        
+        serviceButtons.forEach((button, index) => {
+            if (index < 5) { // Only the first 5 buttons are service buttons
+                button.addEventListener('click', function() {
+                    const serviceCard = this.closest('.bg-white');
+                    const serviceName = serviceCard.querySelector('h3').textContent;
+                    const servicePrice = serviceCard.querySelector('.text-lg.font-semibold').textContent;
+                    const serviceDuration = serviceCard.querySelector('.text-xs.bg-gray-100').textContent;
                     
-                    // Add selected class to clicked time slot
-                    this.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
-                });
-            });
-            
-            // Location selection
-            const locationOptions = document.querySelectorAll('.location-option');
-            const deliveryFeeContainer = document.getElementById('delivery-fee-container');
-            
-            locationOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all location options
-                    locationOptions.forEach(o => {
-                        o.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
-                    });
+                    // Check if service is already selected
+                    const existingService = selectedServicesArray.find(service => service.name === serviceName);
                     
-                    // Add selected class to clicked location option
-                    this.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
-                    
-                    // Show/hide delivery fee
-                    if (this.textContent.includes('A domicílio')) {
-                        deliveryFeeContainer.style.display = 'flex';
+                    if (!existingService) {
+                        // Add service to array
+                        selectedServicesArray.push({
+                            name: serviceName,
+                            price: servicePrice,
+                            duration: serviceDuration
+                        });
                         
-                        // Update total with delivery fee
-                        const subtotal = parseFloat(subtotalElement.textContent.replace('R$ ', '').replace(',', '.'));
-                        const deliveryFee = 10;
-                        totalElement.textContent = `R$ ${(subtotal + deliveryFee).toFixed(2).replace('.', ',')}`;
-                    } else {
-                        deliveryFeeContainer.style.display = 'none';
-                        
-                        // Update total without delivery fee
-                        const subtotal = parseFloat(subtotalElement.textContent.replace('R$ ', '').replace(',', '.'));
-                        totalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                        // Update UI
+                        updateSelectedServices();
                     }
                 });
-            });
-            
-            // Booking confirmation
-            const bookingModal = document.getElementById('booking-modal');
-            const btnCloseModal = document.getElementById('btn-close-modal');
-            
-            btnAgendar.addEventListener('click', function() {
-                // Get selected values
-                const selectedDate = document.querySelector('input[type="date"]').value;
-                const selectedTime = document.querySelector('.time-slot.bg-blue-600')?.textContent || '10:00';
-                const selectedLocation = document.querySelector('.location-option.bg-blue-600')?.textContent.trim() || 'Na barbearia';
+            }
+        });
+        
+        function updateSelectedServices() {
+            if (selectedServicesArray.length > 0) {
+                selectedServices.querySelector('p').classList.add('hidden');
+                serviceList.classList.remove('hidden');
                 
-                // Format date
-                const date = new Date(selectedDate);
-                const formattedDate = date.toLocaleDateString('pt-BR');
+                // Clear service list
+                serviceList.innerHTML = '';
                 
-                // Update modal values
-                document.getElementById('modal-date').textContent = formattedDate || '28/05/2025';
-                document.getElementById('modal-time').textContent = selectedTime;
-                document.getElementById('modal-location').textContent = selectedLocation;
-                document.getElementById('modal-services').textContent = selectedServicesArray.map(service => service.name).join(', ');
-                document.getElementById('modal-total').textContent = totalElement.textContent;
+                // Add each service to the list
+                let subtotal = 0;
                 
-                // Show modal
-                bookingModal.classList.remove('hidden');
-            });
-            
-            btnCloseModal.addEventListener('click', function() {
-                bookingModal.classList.add('hidden');
-                window.location.href = 'cliente-dashboard.html';
+                selectedServicesArray.forEach(service => {
+                    const serviceItem = document.createElement('div');
+                    serviceItem.className = 'flex justify-between items-center bg-gray-50 p-2 rounded';
+                    
+                    const priceValue = parseFloat(service.price.replace('R$ ', '').replace(',', '.'));
+                    subtotal += priceValue;
+                    
+                    serviceItem.innerHTML = `
+                        <div>
+                            <p class="text-sm font-medium">${service.name}</p>
+                            <p class="text-xs text-gray-500">${service.duration}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm font-medium mr-2">${service.price}</span>
+                            <button class="text-red-500 hover:text-red-700" data-service="${service.name}">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    serviceList.appendChild(serviceItem);
+                    
+                    // Add remove button event
+                    const removeButton = serviceItem.querySelector(`button[data-service="${service.name}"]`);
+                    removeButton.addEventListener('click', function() {
+                        const serviceName = this.getAttribute('data-service');
+                        selectedServicesArray = selectedServicesArray.filter(service => service.name !== serviceName);
+                        updateSelectedServices();
+                    });
+                });
+                
+                // Update subtotal and total
+                subtotalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                totalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                
+                // Enable booking button
+                btnAgendar.disabled = false;
+            } else {
+                selectedServices.querySelector('p').classList.remove('hidden');
+                serviceList.classList.add('hidden');
+                
+                // Reset subtotal and total
+                subtotalElement.textContent = 'R$ 0,00';
+                totalElement.textContent = 'R$ 0,00';
+                
+                // Disable booking button
+                btnAgendar.disabled = true;
+            }
+        }
+        
+        // Time slot selection
+        const timeSlots = document.querySelectorAll('.time-slot');
+        
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', function() {
+                // Remove selected class from all time slots
+                timeSlots.forEach(s => {
+                    s.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                });
+                
+                // Add selected class to clicked time slot
+                this.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
             });
         });
-    </script>
+        
+        // Location selection
+        const locationOptions = document.querySelectorAll('.location-option');
+        const deliveryFeeContainer = document.getElementById('delivery-fee-container');
+        
+        locationOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all location options
+                locationOptions.forEach(o => {
+                    o.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                });
+                
+                // Add selected class to clicked location option
+                this.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                
+                // Show/hide delivery fee
+                if (this.textContent.includes('A domicílio')) {
+                    deliveryFeeContainer.style.display = 'flex';
+                    
+                    // Update total with delivery fee
+                    const subtotal = parseFloat(subtotalElement.textContent.replace('R$ ', '').replace(',', '.'));
+                    const deliveryFee = 10;
+                    totalElement.textContent = `R$ ${(subtotal + deliveryFee).toFixed(2).replace('.', ',')}`;
+                } else {
+                    deliveryFeeContainer.style.display = 'none';
+                    
+                    // Update total without delivery fee
+                    const subtotal = parseFloat(subtotalElement.textContent.replace('R$ ', '').replace(',', '.'));
+                    totalElement.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+                }
+            });
+        });
+        
+        // Booking confirmation
+        const bookingModal = document.getElementById('booking-modal');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        
+        btnAgendar.addEventListener('click', function() {
+            // Get selected values
+            const selectedDate = document.querySelector('input[type="date"]').value;
+            const selectedTime = document.querySelector('.time-slot.bg-blue-600')?.textContent || '10:00';
+            const selectedLocation = document.querySelector('.location-option.bg-blue-600')?.textContent.trim() || 'Na barbearia';
+            
+            // Format date
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR');
+            
+            // Update modal values
+            document.getElementById('modal-date').textContent = formattedDate || '28/05/2025';
+            document.getElementById('modal-time').textContent = selectedTime;
+            document.getElementById('modal-location').textContent = selectedLocation;
+            document.getElementById('modal-services').textContent = selectedServicesArray.map(service => service.name).join(', ');
+            document.getElementById('modal-total').textContent = totalElement.textContent;
+            
+            // Show modal
+            bookingModal.classList.remove('hidden');
+        });
+        
+        btnCloseModal.addEventListener('click', function() {
+            bookingModal.classList.add('hidden');
+            window.location.href = 'cliente-dashboard.html';
+        });
+    });
+</script>
+</html>
 </body>
 </html>

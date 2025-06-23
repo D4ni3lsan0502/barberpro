@@ -1,7 +1,7 @@
 {
   "name": "barberpro",
   "version": "1.0.0",
-  "description": "Aplicação para agendamento de serviços de barbearia.",
+  "description": "Aplica\u00e7\u00e3o para agendamento de servi\u00e7os de barbearia.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -1,153 +1,156 @@
 // Estrutura de dados atualizada para o BarberPro V2
 
 // Modelo de dados do Barbeiro
+// Exemplo de modelo de dados do Barbeiro (os valores são exemplos, tipos estão nos comentários)
 const modeloBarbeiro = {
-    id: "string", // Identificador único
-    nome: "string",
-    email: "string",
-    telefone: "string",
-    foto: "string", // URL da foto
+    id: "", // string - Identificador único
+    nome: "",
+    email: "",
+    telefone: "",
+    foto: "", // string - URL da foto
     endereco: {
-        rua: "string",
-        numero: "string",
-        complemento: "string",
-        bairro: "string",
-        cidade: "string",
-        estado: "string",
-        cep: "string"
+        rua: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        cep: ""
     },
     tiposAtendimento: {
-        barbearia: "boolean",
-        domicilio: "boolean"
+        barbearia: false, // boolean
+        domicilio: false  // boolean
     },
     formasPagamento: {
-        dinheiro: "boolean",
-        cartaoCredito: "boolean",
-        cartaoDebito: "boolean",
-        pix: "boolean",
-        transferencia: "boolean"
+        dinheiro: false,
+        cartaoCredito: false,
+        cartaoDebito: false,
+        pix: false,
+        transferencia: false
     },
     // Novos campos para pagamentos
     dadosPagamento: {
         pix: {
-            chave: "string",
-            tipo: "string" // CPF, CNPJ, Email, Telefone, Chave aleatória
+            chave: "",
+            tipo: "" // string - CPF, CNPJ, Email, Telefone, Chave aleatória
         },
         dadosBancarios: {
-            banco: "string",
-            agencia: "string",
-            conta: "string",
-            digito: "string",
-            tipoConta: "string" // Corrente, Poupança
+            banco: "",
+            agencia: "",
+            conta: "",
+            digito: "",
+            tipoConta: "" // string - Corrente, Poupança
         }
     },
     momentoPagamento: {
-        antecipado50: "boolean",
-        antecipado100: "boolean",
-        noAtendimento: "boolean"
+        antecipado50: false,
+        antecipado100: false,
+        noAtendimento: false
     },
     servicos: [
         {
-            id: "string",
-            nome: "string",
-            descricao: "string",
-            preco: "number",
-            duracao: "number", // em minutos
-            disponivel: "boolean"
+            id: "",
+            nome: "",
+            descricao: "",
+            preco: 0, // number
+            duracao: 0, // number - em minutos
+            disponivel: false
         }
     ],
     horariosFuncionamento: {
-        segunda: { inicio: "string", fim: "string", disponivel: "boolean" },
-        terca: { inicio: "string", fim: "string", disponivel: "boolean" },
-        quarta: { inicio: "string", fim: "string", disponivel: "boolean" },
-        quinta: { inicio: "string", fim: "string", disponivel: "boolean" },
-        sexta: { inicio: "string", fim: "string", disponivel: "boolean" },
-        sabado: { inicio: "string", fim: "string", disponivel: "boolean" },
-        domingo: { inicio: "string", fim: "string", disponivel: "boolean" }
+        segunda: { inicio: "", fim: "", disponivel: false },
+        terca: { inicio: "", fim: "", disponivel: false },
+        quarta: { inicio: "", fim: "", disponivel: false },
+        quinta: { inicio: "", fim: "", disponivel: false },
+        sexta: { inicio: "", fim: "", disponivel: false },
+        sabado: { inicio: "", fim: "", disponivel: false },
+        domingo: { inicio: "", fim: "", disponivel: false }
     },
     avaliacoes: [
         {
-            clienteId: "string",
-            nota: "number",
-            comentario: "string",
-            data: "date"
+            clienteId: "",
+            nota: 0, // number
+            comentario: "",
+            data: "" // string ou Date
         }
     ],
-    dataCadastro: "date"
+    dataCadastro: "" // string ou Date
 };
 
-// Modelo de dados do Cliente
+// Exemplo de modelo de dados do Cliente (os valores são exemplos, tipos estão nos comentários)
 const modeloCliente = {
-    id: "string", // Identificador único
-    nome: "string",
-    email: "string",
-    telefone: "string",
-    foto: "string", // URL da foto
+    id: "", // string - Identificador único
+    nome: "",
+    email: "",
+    telefone: "",
+    foto: "", // string - URL da foto
     endereco: {
-        rua: "string",
-        numero: "string",
-        complemento: "string",
-        bairro: "string",
-        cidade: "string",
-        estado: "string",
-        cep: "string"
+        rua: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        cep: ""
     },
     preferencias: {
-        tipoAtendimento: "string", // barbearia, domicilio
-        servicos: ["string"], // IDs dos serviços de interesse
-        formaPagamento: "string", // dinheiro, cartaoCredito, cartaoDebito, pix, transferencia
-        momentoPagamento: "string" // antecipado50, antecipado100, noAtendimento
+        tipoAtendimento: "", // string - barbearia, domicilio
+        servicos: [""], // array de string - IDs dos serviços de interesse
+        formaPagamento: "", // string - dinheiro, cartaoCredito, cartaoDebito, pix, transferencia
+        momentoPagamento: "" // string - antecipado50, antecipado100, noAtendimento
     },
     // Novo campo para favoritos
-    favoritos: ["string"], // IDs dos barbeiros favoritos
+    favoritos: [""], // array de string - IDs dos barbeiros favoritos
     notificacoes: {
-        email: "boolean",
-        sms: "boolean",
-        lembretes: "boolean",
-        promocoes: "boolean"
+        email: false,
+        sms: false,
+        lembretes: false,
+        promocoes: false
     },
-    dataCadastro: "date"
+    dataCadastro: "" // string ou Date
 };
-
-// Modelo de dados de Agendamento
+};
+// Exemplo de modelo de dados de Agendamento (os valores são exemplos, tipos estão nos comentários)
 const modeloAgendamento = {
-    id: "string", // Identificador único
-    clienteId: "string",
-    barbeiroId: "string",
+    id: "", // string - Identificador único
+    clienteId: "",
+    barbeiroId: "",
     servicos: [
         {
-            id: "string",
-            nome: "string",
-            preco: "number",
-            duracao: "number" // em minutos
+            id: "",
+            nome: "",
+            preco: 0, // number
+            duracao: 0 // number - em minutos
         }
     ],
     // Novo campo para duração total calculada
-    duracaoTotal: "number", // em minutos, calculado com base na quantidade de serviços
-    data: "date",
-    horario: "string",
-    local: "string", // barbearia, domicilio
+    duracaoTotal: 0, // number - em minutos, calculado com base na quantidade de serviços
+    data: "", // string ou Date
+    horario: "",
+    local: "", // string - barbearia, domicilio
     endereco: { // Se for a domicílio
-        rua: "string",
-        numero: "string",
-        complemento: "string",
-        bairro: "string",
-        cidade: "string",
-        estado: "string",
-        cep: "string"
+        rua: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        cep: ""
     },
-    formaPagamento: "string", // dinheiro, cartaoCredito, cartaoDebito, pix, transferencia
-    momentoPagamento: "string", // antecipado50, antecipado100, noAtendimento
-    valorTotal: "number",
+    formaPagamento: "", // string - dinheiro, cartaoCredito, cartaoDebito, pix, transferencia
+    momentoPagamento: "", // string - antecipado50, antecipado100, noAtendimento
+    valorTotal: 0, // number
     // Novos campos para comprovante
     comprovante: {
-        necessario: "boolean", // true para pix e transferência
-        arquivo: "string", // URL do arquivo
-        dataEnvio: "date",
-        status: "string" // pendente, aprovado, rejeitado
+        necessario: false, // boolean - true para pix e transferência
+        arquivo: "", // string - URL do arquivo
+        dataEnvio: "", // string ou Date
+        status: "" // string - pendente, aprovado, rejeitado
     },
-    status: "string", // pendente, confirmado, concluido, cancelado
-    observacoes: "string",
+    status: "", // string - pendente, confirmado, concluido, cancelado
+    observacoes: "",
+    dataCriacao: "" // string ou Date
+};
     dataCriacao: "date"
 };
 

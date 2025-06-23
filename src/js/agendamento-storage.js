@@ -6,6 +6,10 @@ const AgendamentoStorage = {
   // Obter todos os agendamentos
   getAll: function() {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.error('localStorage não está disponível.');
+        return [];
+      }
       const data = localStorage.getItem(this.STORAGE_KEY);
       return data ? JSON.parse(data) : [];
     } catch (e) {
@@ -41,9 +45,13 @@ const AgendamentoStorage = {
     // Adicionar à lista
     const agendamentos = this.getAll();
     agendamentos.push(agendamento);
-    
+
     // Salvar no localStorage
     try {
+      if (typeof localStorage === 'undefined') {
+        console.error('localStorage não está disponível.');
+        return false;
+      }
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(agendamentos));
       return true;
     } catch (e) {
@@ -74,13 +82,16 @@ const AgendamentoStorage = {
   
   // Remover agendamento
   remove: function(id) {
-    const agendamentos = this.getAll();
-    const filtrados = agendamentos.filter(item => item.id !== id);
-    
-    if (filtrados.length === agendamentos.length) return false;
-    
-    // Salvar no localStorage
     try {
+      const agendamentos = this.getAll();
+      const filtrados = agendamentos.filter(item => item.id !== id);
+
+      if (filtrados.length === agendamentos.length) return false;
+
+      if (typeof localStorage === 'undefined') {
+        console.error('localStorage não está disponível.');
+        return false;
+      }
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtrados));
       return true;
     } catch (e) {
@@ -120,9 +131,13 @@ const ItemQuantidadeManager = {
     
     // Verificar se o item já existe
     const itemIndex = agendamentos[index].itens.findIndex(i => i.id === item.id);
-    
+
+    if (typeof localStorage === 'undefined') {
+      console.error('localStorage não está disponível.');
+      return false;
+    }
+
     if (itemIndex === -1) {
-      // Adicionar novo item com quantidade
       agendamentos[index].itens.push({
         ...item,
         quantidade: quantidade
@@ -131,11 +146,6 @@ const ItemQuantidadeManager = {
       // Atualizar quantidade do item existente
       agendamentos[index].itens[itemIndex].quantidade += quantidade;
     }
-    
-    // Recalcular valor total
-    this.recalcularTotal(agendamentos[index]);
-    
-    // Salvar no localStorage
     try {
       localStorage.setItem(AgendamentoStorage.STORAGE_KEY, JSON.stringify(agendamentos));
       return true;

@@ -9,6 +9,9 @@
  */
 function gerarLinkGoogleMaps(endereco, usarLocalizacaoAtual = true) {
     // Formatar o endereço completo
+    if (!endereco || !endereco.rua || !endereco.numero || !endereco.bairro || !endereco.cidade || !endereco.estado) {
+        throw new Error('Endereço inválido: todos os campos são obrigatórios (rua, numero, bairro, cidade, estado)');
+    }
     const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}`;
     
     // Codificar o endereço para URL

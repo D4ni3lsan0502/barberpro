@@ -7,11 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (mobileMenuButton && closeMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('-translate-x-full');
+            if (mobileMenu) {
+                mobileMenu.classList.remove('-translate-x-full');
+            }
         });
         
         closeMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.add('-translate-x-full');
+            if (mobileMenu) {
+                mobileMenu.classList.add('-translate-x-full');
+            }
         });
     }
     

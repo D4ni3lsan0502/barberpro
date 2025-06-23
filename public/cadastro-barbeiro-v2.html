@@ -121,24 +121,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- LÓGICA DO FORMULÁRIO FINAL ---
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        if (!validateStep(4)) return;
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!validateStep(4)) return;
 
-        const concluirButton = document.getElementById('btn-concluir');
-        concluirButton.disabled = true;
-        concluirButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Concluindo...';
+            const concluirButton = document.getElementById('btn-concluir');
+            concluirButton.disabled = true;
+            concluirButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Concluindo...';
 
-        // Coleta de dados completa
-        const barbeiroData = { /* ... a lógica de coleta de dados continua a mesma ... */ };
-        console.log("DADOS FINAIS PARA ENVIO:", JSON.stringify(barbeiroData, null, 2));
-        
-        // Simulação de sucesso
-        setTimeout(() => {
-            alert('Cadastro realizado com sucesso!');
-            window.location.href = 'barbeiro-dashboard-v2.html';
-        }, 1000);
-    });
+            // Coleta de dados completa
+            const barbeiroData = { /* ... a lógica de coleta de dados continua a mesma ... */ };
+            console.log("DADOS FINAIS PARA ENVIO:", JSON.stringify(barbeiroData, null, 2));
+            
+            // Simulação de sucesso
+            setTimeout(() => {
+                alert('Cadastro realizado com sucesso!');
+                window.location.href = 'barbeiro-dashboard-v2.html';
+            }, 1000);
+        });
+    }
 
     // --- LÓGICAS AUXILIARES (PAGAMENTOS, SERVIÇOS, HORÁRIOS) ---
     document.getElementById('pag-pix').addEventListener('change', (e) => document.getElementById('pix-fields').classList.toggle('hidden', !e.target.checked));

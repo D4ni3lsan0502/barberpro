@@ -410,48 +410,52 @@ const FavoritesSystem = {
 };
 
 // Inicialização do aplicativo
-document.addEventListener('DOMContentLoaded', function() {
-  // Registrar service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('Service Worker registrado com sucesso:', registration.scope);
-      })
-      .catch(error => {
-        console.error('Falha ao registrar o Service Worker:', error);
-      });
-  }
-  
-  // Verificar login e redirecionar se necessário
-  const currentPage = window.location.pathname.split('/').pop();
-  if (currentPage !== 'login.html' && currentPage !== 'cadastro-barbeiro.html' && currentPage !== 'cadastro-cliente.html') {
-    if (!AuthSystem.isLoggedIn()) {
-      window.location.href = 'login.html';
-      return;
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Registrar service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registrado com sucesso:', registration.scope);
+        })
+        .catch(error => {
+          console.error('Falha ao registrar o Service Worker:', error);
+        });
     }
-  }
-  
-  // Solicitar permissão para notificações
-  if (CONFIG.enableNotifications && NotificationSystem.isSupported()) {
-    NotificationSystem.requestPermission()
-      .then(permission => {
-        if (permission === 'granted') {
-          console.log('Permissão para notificações concedida');
-        }
-      })
-      .catch(error => {
-        console.warn('Erro ao solicitar permissão para notificações:', error);
-      });
-  }
-});
-
+    
+    // Verificar login e redirecionar se necessário
+    const currentPage = window.location.pathname.split('/').pop();
+    if (currentPage !== 'login.html' && currentPage !== 'cadastro-barbeiro.html' && currentPage !== 'cadastro-cliente.html') {
+      if (!AuthSystem.isLoggedIn()) {
+        window.location.href = 'login.html';
+        return;
+      }
+    }
+    
+    // Solicitar permissão para notificações
+    if (CONFIG.enableNotifications && NotificationSystem.isSupported()) {
+      NotificationSystem.requestPermission()
+        .then(permission => {
+          if (permission === 'granted') {
+            console.log('Permissão para notificações concedida');
+          }
+        })
+        .catch(error => {
+          console.warn('Erro ao solicitar permissão para notificações:', error);
+        });
+    }
+  });
 // Exportar sistemas para uso global
-window.BarberPro = {
-  Auth: AuthSystem,
-  Payment: PaymentSystem,
-  Location: LocationSystem,
-  Notification: NotificationSystem,
-  Appointment: AppointmentSystem,
-  Favorites: FavoritesSystem,
+if (typeof window !== 'undefined') {
+  window.BarberPro = {
+    Auth: AuthSystem,
+    Payment: PaymentSystem,
+    Location: LocationSystem,
+    Notification: NotificationSystem,
+    Appointment: AppointmentSystem,
+    Favorites: FavoritesSystem,
+    Config: CONFIG
+  };
+}
   Config: CONFIG
 };

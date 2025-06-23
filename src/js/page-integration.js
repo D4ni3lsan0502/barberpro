@@ -7,9 +7,31 @@ window.BarberPro = window.BarberPro || {};
 window.BarberPro.Integration = (function() {
     // Armazenar referências aos módulos
     const modules = {
-        navigation: window.BarberPro.Navigation,
-        storage: window.BarberPro.AgendamentoStorage,
-        ui: window.BarberPro.AgendamentoUI
+        navigation: window.BarberPro.Navigation || {
+            navigateTo: function() { 
+                console.error('BarberPro.Navigation não está disponível.');
+            },
+            getUrlParams: function() { 
+                return {}; 
+            }
+        },
+        storage: window.BarberPro.AgendamentoStorage || {
+            getAgendamentosCliente: function() { return []; },
+            getAgendamentosBarbeiro: function() { return []; },
+            getServicosDisponiveis: function() { return []; },
+            salvarAgendamento: function() {},
+            getAgendamento: function() { return null; },
+            atualizarStatusAgendamento: function() {},
+            getFavoritos: function() { return []; },
+            confirmarAgendamento: function() {}
+        },
+        ui: window.BarberPro.AgendamentoUI || {
+            renderServicosComQuantidade: function() {},
+            renderCalendario: function() {},
+            getServicosSelecionados: function() { return []; },
+            getDataHoraSelecionada: function() { return null; },
+            renderDetalhesAgendamento: function() {}
+        }
     };
     
     // Detectar página atual

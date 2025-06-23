@@ -1,12 +1,56 @@
-const { body } = require('express-validator');
-const { cadastrar, login } = require('../controllers/userController');
+import express from 'express';
+const router = express.Router();
 
-router.post('/cadastro',
-  [
-    body('nome').notEmpty().withMessage('Nome é obrigatório'),
-    body('email').isEmail().withMessage('Email inválido'),
-    body('senha').isLength({ min: 6 }).withMessage('Senha precisa ter no mínimo 6 caracteres'),
-    body('tipo').isIn(['cliente', 'barbeiro']).withMessage('Tipo deve ser cliente ou barbeiro')
-  ],
-  cadastrar
-);
+import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+// Cadastro
+router.post('/cadastro', async (req, res) => {
+  const { nome, email, senha, tipo } = req.body;
+  if (!nome || !email || !senha || !tipo) {
+    return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+  }
+
+  try {
+    const hash = await bcrypt.hash(senha, 10);
+    const user = await User.create({ nome, email, senha: hash, tipo });
+    res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
+  } catch (err) {
+    res.status(400).json({ message: 'Erro ao cadastrar. E-mail pode já estar em uso.' });
+  }
+});
+
+// Login
+router.post('/login', async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Usuário não encontrado.' });
+    }
+
+    const valid = await bcrypt.compare(senha, user.senha);
+    if (!valid) {
+      return res.status(400).json({ message: 'Senha incorreta.' });
+    }
+
+    const token = jwt.sign({ id: user._id, tipo: user.tipo }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
+
+    res.json({
+      token,
+      user: {
+        nome: user.nome,
+        email: user.email,
+        tipo: user.tipo,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Erro no servidor ao fazer login.' });
+  }
+});
+
+export default router;

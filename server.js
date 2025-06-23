@@ -125,6 +125,10 @@ app.post('/api/login', async (req, res, next) => {
 });
 
 // 🔐 Rota protegida: Perfil
+
+const { swaggerUi, specs } = require('./swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 // 🛑 Middleware global de tratamento de erros
 app.use(errorHandler);
 
@@ -132,6 +136,3 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
-const { swaggerUi, specs } = require('./swagger');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
