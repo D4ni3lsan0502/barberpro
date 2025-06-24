@@ -11,6 +11,11 @@ const serviceRoutes = require('./routes/serviceRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
+// 🎯 Uso das rotas
+app.use('/api/users', userRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/appointments', appointmentRoutes);
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
