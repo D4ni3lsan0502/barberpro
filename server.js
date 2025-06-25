@@ -18,7 +18,19 @@ if (!process.env.MONGODB_URI || !process.env.JWT_SECRET) {
 // Middlewares
 app.use(cors());
 app.use(express.json());
+const fs = require('fs');
+const path = require('path');
+
+// Garante que o diretório 'public' existe
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir);
+}
+
 app.use(express.static('public'));
+const clientRoutes = require('./routes/clientRoutes');
+app.use('/api', clientRoutes);
+
 
 // Conexão com MongoDB
 mongoose.connect(process.env.MONGODB_URI, {

@@ -1,5 +1,4 @@
 {
-  "$schema": "https://railway.app/schema.json",
   "deploy": {
     "runtime": "2",
     "numReplicas": 1,

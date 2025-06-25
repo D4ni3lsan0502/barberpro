@@ -18,7 +18,7 @@ router.post('/clientes', async (req, res) => {
 router.get('/clientes', async (req, res) => {
   try {
     const clientes = await Client.find();
-    if (!clientes) {
+    if (!clientes || clientes.length === 0) {
       return res.status(404).json({ message: 'Nenhum cliente encontrado' });
     }
     res.json(clientes);
