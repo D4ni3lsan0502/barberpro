@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Meus Agendamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-700 {
+            color: #cccccc;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #333333;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .border-blue-500 {
+            border-color: #ffffff;
+        }
+        .text-yellow-400 {
+            color: #ffd700;
+        }
+        .text-gray-900 {
+            color: #ffffff;
+        }
+        .text-gray-600 {
+            color: #aaaaaa;
+        }
+        .border-gray-200 {
+            border-color: #333333;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gray-400 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-200 {
+            background-color: #333333;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:border-blue-500:focus {
+            border-color: #ffffff;
+        }
+        .border-gray-300 {
+            border-color: #333333;
+        }
+        .bg-gray-300 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-500 {
+            background-color: #888888;
+        }
+        .bg-gray-600 {
+            background-color: #666666;
+        }
+        .bg-gray-700 {
+            background-color: #444444;
+        }
+        .bg-gray-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-gray-900 {
+            background-color: #000000;
+        }
+        .text-gray-500 {
+            color: #aaaaaa;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .text-gray-300 {
+            color: #cccccc;
+        }
+        .text-gray-200 {
+            color: #dddddd;
+        }
+        .text-gray-100 {
+            color: #eeeeee;
+        }
+        .text-black {
+            color: #000000;
+        }
+        .text-white {
+            color: #ffffff;
+        }
+        .bg-black {
+            background-color: #000000;
+        }
+        .bg-slate-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-slate-900 {
+            background-color: #000000;
+        }
+        .border-slate-800 {
+            border-color: #333333;
+        }
+        .barber-card {
+            background-color: #1a1a1a;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .text-blue-500 {
+            color: #ffffff;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #333333;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px rgba(255, 255, 255, 0.5);
+        }
+        .text-blue-700 {
+            color: #ffffff;
+        }
+        .bg-blue-100 {
+            background-color: #1a1a1a;
+        }
+        .hover\:bg-blue-200:hover {
+            background-color: #333333;
+        }
+        .text-indigo-600 {
+            color: #ffffff;
+        }
+        .hover\:text-indigo-900:hover {
+            color: #cccccc;
+        }
+        .text-red-600 {
+            color: #ff4500;
+        }
+        .hover\:bg-red-700:hover {
+            background-color: #cc3700;
+        }
+        .focus\:ring-red-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.5);
+        }
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px rgba(255, 69, 0, 0.5);
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .text-white {
+            color: #000000;
+        }
+        .bg-white {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #cccccc;
+        }
+        .text-slate-800 {
+            color: #000000;
+        }
+        .bg-transparent {
+            background-color: transparent;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .hover\:text-blue-600:hover {
+            color: #000000;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gradient-to-r.from-blue-600.to-blue-800 {
+            background-image: none;
+            background-color: #000000;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .hover\:text-white:hover {
+            color: #ffffff;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .text-white {
+            color: #000000;
+        }
+        .bg-white {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #cccccc;
+        }
+        .text-slate-800 {
+            color: #000000;
+        }
+        .bg-transparent {
+            background-color: transparent;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .hover\:text-blue-600:hover {
+            color: #000000;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gradient-to-r.from-blue-600.to-blue-800 {
+            background-image: none;
+            background-color: #000000;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .hover\:text-white:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <!-- Navbar -->
+    <nav class="bg-black shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="img/matheus_costa_barber_logo.png" alt="Matheus Costa Barber Logo" class="h-10 mr-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="relative">
+                        <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold" id="user-avatar"></div>
+                            <span class="hidden md:block text-sm font-medium text-white" id="user-name">Carregando...</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                        <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="cliente-perfil.html" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Meu Perfil</a>
+                            <a href="cliente-configuracoes.html" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Configurações</a>
+                            <a href="#" id="logout-button" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Meus Agendamentos -->
+        <div id="content-agendamentos">
+            <div class="bg-slate-800 rounded-lg shadow-md overflow-hidden mb-6">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Meus Agendamentos</h3>
+                    <div id="agendamentos-list" class="space-y-4">
+                        <!-- Os agendamentos serão carregados dinamicamente -->
+                        <p id="no-agendamentos" class="text-gray-500 text-center py-4">Você ainda não possui agendamentos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão para Novo Agendamento -->
+            <div class="text-center mt-8">
+                <a href="agendamento-cliente.html" class="bg-white text-black py-3 px-6 rounded-md hover:bg-gray-300 transition duration-300 font-semibold">
+                    Novo Agendamento
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black mt-12 border-t border-gray-700">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-sm text-gray-500">
+                <p>&copy; 2025 Matheus Costa Barber - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="src/js/agendamento-storage.js"></script>
+    <script src="src/js/cliente-storage.js"></script>
+    <script>
+        document.addEventListener(
+            'DOMContentLoaded', function() {
+            // Verificar login
+            const userData = JSON.parse(localStorage.getItem(
+                'barberpro_usuario_logado') || '{}');
+            if (!userData.id || userData.tipo !== 'cliente') {
+                // Redirecionar para login se não estiver logado ou não for cliente
+                window.location.href = 'login-cliente.html';
+                return;
+            }
+
+            // Exibir nome do usuário
+            document.getElementById(
+                'user-name').textContent = userData.nome || 'Cliente';
+
+            // Exibir inicial do avatar
+            const userInitial = (userData.nome || 'C').charAt(0).toUpperCase();
+            document.getElementById(
+                'user-avatar').textContent = userInitial;
+
+            // Toggle menu do usuário
+            const userMenuButton = document.getElementById(
+                'user-menu-button');
+            const userMenu = document.getElementById(
+                'user-menu');
+
+            userMenuButton.addEventListener(
+                'click', function() {
+                userMenu.classList.toggle(
+                    'hidden');
+            });
+
+            // Fechar menu ao clicar fora
+            document.addEventListener(
+                'click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add(
+                        'hidden');
+                }
+            });
+
+            // Logout
+            document.getElementById(
+                'logout-button').addEventListener(
+                'click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem(
+                    'barberpro_usuario_logado');
+                window.location.href = 'login-cliente.html';
+            });
+
+            // Carregar agendamentos
+            carregarAgendamentos();
+
+            // Função para carregar agendamentos (simplificada para um único barbeiro)
+            function carregarAgendamentos() {
+                const agendamentosDoCliente = BarberPro.AgendamentoStorage.getByCliente(userData.id);
+                const agendamentosList = document.getElementById(
+                    'agendamentos-list');
+                agendamentosList.innerHTML = ''; // Limpar agendamentos existentes
+
+                if (agendamentosDoCliente.length === 0) {
+                    agendamentosList.innerHTML = 
+                        '<p id="no-agendamentos" class="text-gray-500 text-center py-4">Você ainda não possui agendamentos.</p>';
+                    return;
+                }
+
+                agendamentosDoCliente.forEach(agendamento => {
+                    const agendamentoItem = document.createElement(
+                        'div');
+                    agendamentoItem.className = 'bg-slate-900 p-4 rounded-lg shadow-md mb-4';
+                    
+                    // Calcular o preço total dos serviços
+                    let precoTotal = 0;
+                    if (agendamento.servicos && Array.isArray(agendamento.servicos)) {
+                        precoTotal = agendamento.servicos.reduce((sum, servico) => sum + (servico.preco || 0), 0);
+                    }
+
+                    agendamentoItem.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-lg font-semibold text-white">${agendamento.servicos.map(s => s.nome).join(', ')}</h4>
+                            <span class="status-badge ${agendamento.status}">${agendamento.status.charAt(0).toUpperCase() + agendamento.status.slice(1)}</span>
+                        </div>
+                        <p class="text-gray-400 mb-1">Data: ${new Date(agendamento.data).toLocaleDateString('pt-BR')}</p>
+                        <p class="text-gray-400 mb-1">Horário: ${agendamento.hora}</p>
+                        <p class="text-gray-400 mb-1">Total: R$ ${precoTotal.toFixed(2).replace('.', ',')}</p>
+                    `;
+                    agendamentosList.appendChild(agendamentoItem);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
