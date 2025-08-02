@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Cadastro Cliente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-600 {
+            color: #cccccc;
+        }
+        .border-gray-200 {
+            border-color: #333333;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .border-blue-600 {
+            border-color: #ffffff;
+        }
+        .text-gray-500 {
+            color: #aaaaaa;
+        }
+        .hover\:text-gray-700:hover {
+            color: #ffffff;
+        }
+        .border-gray-300 {
+            border-color: #333333;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:border-blue-500:focus {
+            border-color: #ffffff;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .bg-slate-800 {
+            background-color: #1a1a1a;
+        }
+        .hover\:bg-slate-900:hover {
+            background-color: #333333;
+        }
+        .shadow-lg {
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <div class="text-center mb-8">
+                    <img src="img/matheus_costa_barber_logo.png" alt="Matheus Costa Barber Logo" class="h-16 mx-auto mb-4">
+                    <h1 class="text-3xl font-bold text-white">Cadastro de Cliente</h1>
+                    <p class="text-gray-400 mt-2">Crie sua conta para agendar serviços</p>
+                </div>
+                
+                <form id="cadastro-cliente-form">
+                    <div class="mb-4">
+                        <label for="nome-cliente" class="block text-sm font-medium text-gray-300 mb-1">Nome Completo</label>
+                        <input type="text" id="nome-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Seu nome" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email-cliente" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="telefone-cliente" class="block text-sm font-medium text-gray-300 mb-1">Telefone</label>
+                        <input type="tel" id="telefone-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="(XX) XXXXX-XXXX" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="senha-cliente" class="block text-sm font-medium text-gray-300 mb-1">Senha</label>
+                        <input type="password" id="senha-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="••••••••" required>
+                    </div>
+
+                    <!-- Campos de Endereço -->
+                    <div class="mb-4">
+                        <label for="cep" class="block text-sm font-medium text-gray-300 mb-1">CEP</label>
+                        <input type="text" id="cep" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="XXXXX-XXX" maxlength="9">
+                    </div>
+                    <div class="mb-4">
+                        <label for="rua" class="block text-sm font-medium text-gray-300 mb-1">Rua</label>
+                        <input type="text" id="rua" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Rua" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label for="numero" class="block text-sm font-medium text-gray-300 mb-1">Número</label>
+                        <input type="text" id="numero" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Número">
+                    </div>
+                    <div class="mb-4">
+                        <label for="complemento" class="block text-sm font-medium text-gray-300 mb-1">Complemento</label>
+                        <input type="text" id="complemento" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Apartamento, Bloco, etc.">
+                    </div>
+                    <div class="mb-4">
+                        <label for="bairro" class="block text-sm font-medium text-gray-300 mb-1">Bairro</label>
+                        <input type="text" id="bairro" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Bairro" readonly>
+                    </div>
+                    <div class="mb-6">
+                        <label for="cidade" class="block text-sm font-medium text-gray-300 mb-1">Cidade</label>
+                        <input type="text" id="cidade" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Cidade" readonly>
+                    </div>
+                    <div class="mb-6">
+                        <label for="estado" class="block text-sm font-medium text-gray-300 mb-1">Estado</label>
+                        <input type="text" id="estado" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="Estado" readonly>
+                    </div>
+
+                    <div class="mb-6">
+                        <button type="submit" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-gray-300 transition duration-300 font-semibold">
+                            Cadastrar
+                        </button>
+                    </div>
+                </form>
+                <p class="text-center text-gray-400 text-sm">
+                    Já tem uma conta? <a href="login-cliente.html" class="text-white hover:underline">Faça login aqui</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <p class="text-sm text-gray-400">
+                &copy; 2025 Matheus Costa Barber - Todos os direitos reservados
+            </p>
+        </div>
+    </div>
+    
+    <script src="src/js/cliente-storage.js"></script>
+    <script>
+        document.addEventListener(
+            'DOMContentLoaded', function() {
+            const form = document.getElementById('cadastro-cliente-form');
+            const cepInput = document.getElementById('cep');
+            const ruaInput = document.getElementById('rua');
+            const numeroInput = document.getElementById('numero');
+            const complementoInput = document.getElementById('complemento');
+            const bairroInput = document.getElementById('bairro');
+            const cidadeInput = document.getElementById('cidade');
+            const estadoInput = document.getElementById('estado');
+
+            cepInput.addEventListener('blur', function() {
+                const cep = this.value.replace(/\D/g, ''); // Remove non-digits
+                if (cep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                ruaInput.value = data.logradouro;
+                                bairroInput.value = data.bairro;
+                                cidadeInput.value = data.localidade;
+                                estadoInput.value = data.uf;
+                                numeroInput.focus(); // Focus on number field
+                            } else {
+                                alert('CEP não encontrado.');
+                                clearAddressFields();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar CEP:', error);
+                            alert('Erro ao buscar CEP. Tente novamente.');
+                            clearAddressFields();
+                        });
+                } else {
+                    clearAddressFields();
+                }
+            });
+
+            function clearAddressFields() {
+                ruaInput.value = '';
+                bairroInput.value = '';
+                cidadeInput.value = '';
+                estadoInput.value = '';
+                numeroInput.value = '';
+                complementoInput.value = '';
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = document.getElementById('nome-cliente').value;
+                const email = document.getElementById('email-cliente').value;
+                const telefone = document.getElementById('telefone-cliente').value;
+                const senha = document.getElementById('senha-cliente').value;
+                const cep = cepInput.value;
+                const rua = ruaInput.value;
+                const numero = numeroInput.value;
+                const complemento = complementoInput.value;
+                const bairro = bairroInput.value;
+                const cidade = cidadeInput.value;
+                const estado = estadoInput.value;
+
+                const cliente = {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    senha: senha, // Em um ambiente real, a senha seria hashada
+                    endereco: {
+                        cep: cep,
+                        rua: rua,
+                        numero: numero,
+                        complemento: complemento,
+                        bairro: bairro,
+                        cidade: cidade,
+                        estado: estado
+                    }
+                };
+
+                if (BarberPro.ClienteStorage.add(cliente)) {
+                    // Fazer login automático após cadastro
+                    const clienteCadastrado = BarberPro.ClienteStorage.getByEmail(email);
+                    localStorage.setItem('barberpro_usuario_logado', JSON.stringify(clienteCadastrado));
+                    
+                    alert('Cadastro realizado com sucesso! Bem-vindo!');
+                    window.location.href = 'cliente-dashboard.html';
+                } else {
+                    alert('Erro ao cadastrar. O email pode já estar em uso.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+

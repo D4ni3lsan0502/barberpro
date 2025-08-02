@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Agendar Horário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-700 {
+            color: #cccccc;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #333333;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .border-blue-500 {
+            border-color: #ffffff;
+        }
+        .text-yellow-400 {
+            color: #ffd700;
+        }
+        .text-gray-900 {
+            color: #ffffff;
+        }
+        .text-gray-600 {
+            color: #aaaaaa;
+        }
+        .border-gray-200 {
+            border-color: #333333;
+        }
+        .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .bg-gray-400 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-200 {
+            background-color: #333333;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:border-blue-500:focus {
+            border-color: #ffffff;
+        }
+        .border-gray-300 {
+            border-color: #333333;
+        }
+        .bg-gray-300 {
+            background-color: #aaaaaa;
+        }
+        .bg-gray-500 {
+            background-color: #888888;
+        }
+        .bg-gray-600 {
+            background-color: #666666;
+        }
+        .bg-gray-700 {
+            background-color: #444444;
+        }
+        .bg-gray-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-gray-900 {
+            background-color: #000000;
+        }
+        .text-gray-500 {
+            color: #aaaaaa;
+        }
+        .text-gray-400 {
+            color: #aaaaaa;
+        }
+        .text-gray-300 {
+            color: #cccccc;
+        }
+        .text-gray-200 {
+            color: #dddddd;
+        }
+        .text-gray-100 {
+            color: #eeeeee;
+        }
+        .text-black {
+            color: #000000;
+        }
+        .text-white {
+            color: #ffffff;
+        }
+        .bg-black {
+            background-color: #000000;
+        }
+        .bg-slate-800 {
+            background-color: #1a1a1a;
+        }
+        .bg-slate-900 {
+            background-color: #000000;
+        }
+        .border-slate-800 {
+            border-color: #333333;
+        }
+        .barber-card {
+            background-color: #1a1a1a;
+        }
+        .border-white {
+            border-color: #ffffff;
+        }
+        .text-blue-500 {
+            color: #ffffff;
+        }
+        .hover\:text-blue-600:hover {
+            color: #000000;
+        }
+        .bg-gradient-to-r.from-blue-600.to-blue-800 {
+            background-image: none;
+            background-color: #000000;
+        }
+        .hover\:text-white:hover {
+            color: #ffffff;
+        }
+        .bg-transparent {
+            background-color: transparent;
+        }
+        .text-indigo-600 {
+            color: #ffffff;
+        }
+        .hover\:text-indigo-900:hover {
+            color: #cccccc;
+        }
+        .text-red-600 {
+            color: #ff4500;
+        }
+        .hover\:bg-red-700:hover {
+            background-color: #cc3700;
+        }
+        .focus\:ring-red-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.5);
+        }
+        .focus\:ring-offset-2:focus {
+            box-shadow: 0 0 0 2px #000000, 0 0 0 4px rgba(255, 69, 0, 0.5);
+        }
+        .text-slate-800 {
+            color: #000000;
+        }
+        .hover\:bg-gray-100:hover {
+            background-color: #cccccc;
+        }
+        .text-blue-700 {
+            color: #ffffff;
+        }
+        .bg-blue-100 {
+            background-color: #1a1a1a;
+        }
+        .hover\:bg-blue-200:hover {
+            background-color: #333333;
+        }
+        .cursor-not-allowed {
+            cursor: not-allowed;
+        }
+        .disabled\:opacity-50:disabled {
+            opacity: 0.5;
+        }
+        .bg-green-600 {
+            background-color: #22c55e;
+        }
+        .hover\:bg-green-700:hover {
+            background-color: #16a34a;
+        }
+        .text-green-600 {
+            color: #22c55e;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <!-- Navbar -->
+    <nav class="bg-black shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="img/matheus_costa_barber_logo.png" alt="Matheus Costa Barber Logo" class="h-10 mr-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="relative">
+                        <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
+                            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold" id="user-avatar"></div>
+                            <span class="hidden md:block text-sm font-medium text-white" id="user-name">Carregando...</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                        <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="cliente-perfil.html" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Meu Perfil</a>
+                            <a href="cliente-configuracoes.html" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Configurações</a>
+                            <a href="#" id="logout-button" class="block px-4 py-2 text-sm text-white hover:bg-slate-900">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Formulário de Agendamento -->
+            <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-white p-6 text-black">
+                    <h1 class="text-2xl font-bold">Agendar Serviço</h1>
+                    <p class="mt-2">Preencha os dados abaixo para agendar seu serviço</p>
+                </div>
+                
+                <div class="p-6">
+                    <form id="agendamento-form">
+                        <!-- Progresso do agendamento -->
+                        <div class="mb-8">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium text-white" id="etapa-texto">Etapa 1 de 3</span>
+                                <span class="text-sm text-gray-500" id="etapa-descricao">Serviços</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div class="bg-white h-2.5 rounded-full" id="progress-bar" style="width: 33%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Etapa 1: Seleção de Serviços -->
+                        <div id="etapa-1" class="block">
+                            <h2 class="text-xl font-semibold mb-4">Selecione os Serviços</h2>
+                            
+                            <div class="mb-6">
+                                <div class="flex items-center mb-4">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Barbeiro" class="w-12 h-12 rounded-full border-2 border-white">
+                                    <div class="ml-4">
+                                        <h3 class="text-md font-medium text-white">Matheus Costa</h3>
+                                        <div class="flex text-yellow-400 text-xs">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <span class="text-gray-500 ml-1">(4.5)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-1" name="servicos" value="1" class="servico-checkbox mr-3" data-duracao="30" data-preco="40">
+                                        <div class="flex-1">
+                                            <label for="servico-1" class="block font-medium text-white">Corte Masculino</label>
+                                            <p class="text-sm text-gray-400">Corte tradicional com tesoura ou máquina</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-xs text-gray-400">30 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-2" name="servicos" value="2" class="servico-checkbox mr-3" data-duracao="20" data-preco="30">
+                                        <div class="flex-1">
+                                            <label for="servico-2" class="block font-medium text-white">Barba</label>
+                                            <p class="text-sm text-gray-400">Barba completa com toalha quente</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-xs text-gray-400">20 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-3" name="servicos" value="3" class="servico-checkbox mr-3" data-duracao="15" data-preco="25">
+                                        <div class="flex-1">
+                                            <label for="servico-3" class="block font-medium text-white">Sobrancelha</label>
+                                            <p class="text-sm text-gray-400">Modelagem de sobrancelha</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-xs text-gray-400">15 min</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center p-3 border border-gray-700 rounded-md">
+                                        <input type="checkbox" id="servico-4" name="servicos" value="4" class="servico-checkbox mr-3" data-duracao="60" data-preco="80">
+                                        <div class="flex-1">
+                                            <label for="servico-4" class="block font-medium text-white">Corte + Barba</label>
+                                            <p class="text-sm text-gray-400">Combo corte e barba completa</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-xs text-gray-400">60 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-4 rounded-md mb-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-medium text-white">Total:</p>
+                                        <p id="tempo-total" class="text-xs text-gray-400">0 min</p>
+                                    </div>
+                                    <p id="preco-total" class="text-lg font-semibold text-white">R$ 0,00</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button type="button" id="btn-proximo-1" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 2: Data e Horário -->
+                        <div id="etapa-2" class="hidden">
+                            <h2 class="text-xl font-semibold mb-4">Escolha Data e Horário</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="data-agendamento" class="block text-sm font-medium text-white mb-2">Data</label>
+                                    <input type="date" id="data-agendamento" name="data" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                                
+                                <div>
+                                    <label for="horario-agendamento" class="block text-sm font-medium text-white mb-2">Horário</label>
+                                    <select id="horario-agendamento" name="horario" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="">Selecione um horário</option>
+                                        <option value="08:00">08:00</option>
+                                        <option value="08:30">08:30</option>
+                                        <option value="09:00">09:00</option>
+                                        <option value="09:30">09:30</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="10:30">10:30</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="11:30">11:30</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="14:30">14:30</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="15:30">15:30</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="16:30">16:30</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="17:30">17:30</option>
+                                        <option value="18:00">18:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <button type="button" id="btn-voltar-2" class="bg-gray-600 text-white px-6 py-2 rounded-md hover:bg-gray-700">
+                                    Voltar
+                                </button>
+                                <button type="button" id="btn-proximo-2" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 3: Forma de Pagamento -->
+                        <div id="etapa-3" class="hidden">
+                            <h2 class="text-xl font-semibold mb-4">Forma de Pagamento</h2>
+                            
+                            <div class="space-y-4 mb-6">
+                                <div>
+                                    <label for="forma-pagamento" class="block text-sm font-medium text-white mb-2">Forma de Pagamento</label>
+                                    <select id="forma-pagamento" name="formaPagamento" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="">Selecione a forma de pagamento</option>
+                                        <option value="dinheiro">Dinheiro</option>
+                                        <option value="cartao">Cartão</option>
+                                        <option value="pix">PIX</option>
+                                        <option value="transferencia">Transferência Bancária</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="momento-pagamento" class="block text-sm font-medium text-white mb-2">Momento do Pagamento</label>
+                                    <select id="momento-pagamento" name="momentoPagamento" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="">Selecione quando pagar</option>
+                                        <option value="antecipado50">50% Adiantado</option>
+                                        <option value="antecipado100">100% Adiantado</option>
+                                        <option value="noLocal">Pagar no Local</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Seção de dados PIX -->
+                            <div id="secao-dados-pix" class="hidden mb-6 p-4 bg-slate-900 rounded-md">
+                                <h3 class="text-lg font-semibold mb-3 text-white">Dados para PIX</h3>
+                                <div class="space-y-2">
+                                    <p class="text-sm text-gray-300"><strong>Chave PIX:</strong> matheus@barber.com</p>
+                                    <p class="text-sm text-gray-300"><strong>Nome:</strong> Matheus Costa</p>
+                                    <p class="text-sm text-gray-300"><strong>Valor:</strong> <span id="valor-pix">R$ 0,00</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Seção de dados transferência -->
+                            <div id="secao-dados-transferencia" class="hidden mb-6 p-4 bg-slate-900 rounded-md">
+                                <h3 class="text-lg font-semibold mb-3 text-white">Dados para Transferência</h3>
+                                <div class="space-y-2">
+                                    <p class="text-sm text-gray-300"><strong>Banco:</strong> Banco do Brasil</p>
+                                    <p class="text-sm text-gray-300"><strong>Agência:</strong> 1234-5</p>
+                                    <p class="text-sm text-gray-300"><strong>Conta:</strong> 12345-6</p>
+                                    <p class="text-sm text-gray-300"><strong>Nome:</strong> Matheus Costa</p>
+                                    <p class="text-sm text-gray-300"><strong>CPF:</strong> 123.456.789-00</p>
+                                    <p class="text-sm text-gray-300"><strong>Valor:</strong> <span id="valor-transferencia">R$ 0,00</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Seção de comprovante -->
+                            <div id="secao-comprovante" class="hidden mb-6 p-4 bg-slate-900 rounded-md">
+                                <h3 class="text-lg font-semibold mb-3 text-white">Enviar Comprovante</h3>
+                                <p id="mensagem-comprovante" class="text-sm text-gray-300 mb-4">Atenção: Você precisa enviar o comprovante de pagamento para confirmar seu agendamento.</p>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="input-comprovante" class="block text-sm font-medium text-white mb-2">Selecionar Arquivo</label>
+                                        <input type="file" id="input-comprovante" accept="image/*,.pdf" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <p id="nome-arquivo" class="text-xs text-gray-400 mt-1">Nenhum arquivo selecionado</p>
+                                    </div>
+                                    
+                                    <button type="button" id="btn-enviar-comprovante" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                        Enviar Comprovante
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <button type="button" id="btn-voltar-3" class="bg-gray-600 text-white px-6 py-2 rounded-md hover:bg-gray-700">
+                                    Voltar
+                                </button>
+                                <button type="button" id="btn-confirmar" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    Confirmar Agendamento
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/js/cliente-storage.js"></script>
+    <script>
+        // Variáveis globais
+        let etapaAtual = 1;
+        let servicosSelecionados = [];
+        let dadosAgendamento = {};
+        let comprovanteEnviado = false;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosUsuario();
+            configurarEventListeners();
+            configurarDataMinima();
+        });
+
+        // Carregar dados do usuário logado
+        function carregarDadosUsuario() {
+            const clienteLogado = getClienteLogado();
+            if (!clienteLogado) {
+                window.location.href = 'login-cliente.html';
+                return;
+            }
+
+            document.getElementById('user-name').textContent = clienteLogado.nome;
+            document.getElementById('user-avatar').textContent = clienteLogado.nome.charAt(0).toUpperCase();
+        }
+
+        // Configurar data mínima (hoje)
+        function configurarDataMinima() {
+            const hoje = new Date();
+            const dataFormatada = hoje.toISOString().split('T')[0];
+            document.getElementById('data-agendamento').min = dataFormatada;
+        }
+
+        // Configurar event listeners
+        function configurarEventListeners() {
+            // Menu do usuário
+            document.getElementById('user-menu-button').addEventListener('click', function() {
+                document.getElementById('user-menu').classList.toggle('hidden');
+            });
+
+            document.getElementById('logout-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+                window.location.href = 'index.html';
+            });
+
+            // Checkboxes de serviços
+            document.querySelectorAll('.servico-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', atualizarServicos);
+            });
+
+            // Botões de navegação
+            document.getElementById('btn-proximo-1').addEventListener('click', () => irParaEtapa(2));
+            document.getElementById('btn-voltar-2').addEventListener('click', () => irParaEtapa(1));
+            document.getElementById('btn-proximo-2').addEventListener('click', () => irParaEtapa(3));
+            document.getElementById('btn-voltar-3').addEventListener('click', () => irParaEtapa(2));
+
+            // Campos de data e horário
+            document.getElementById('data-agendamento').addEventListener('change', validarEtapa2);
+            document.getElementById('horario-agendamento').addEventListener('change', validarEtapa2);
+
+            // Campos de pagamento
+            document.getElementById('forma-pagamento').addEventListener('change', atualizarFormaPagamento);
+            document.getElementById('momento-pagamento').addEventListener('change', atualizarFormaPagamento);
+
+            // Upload de comprovante
+            document.getElementById('input-comprovante').addEventListener('change', function() {
+                const arquivo = this.files[0];
+                const nomeArquivo = document.getElementById('nome-arquivo');
+                const btnEnviar = document.getElementById('btn-enviar-comprovante');
+
+                if (arquivo) {
+                    nomeArquivo.textContent = arquivo.name;
+                    btnEnviar.disabled = false;
+                } else {
+                    nomeArquivo.textContent = 'Nenhum arquivo selecionado';
+                    btnEnviar.disabled = true;
+                }
+            });
+
+            document.getElementById('btn-enviar-comprovante').addEventListener('click', enviarComprovante);
+            document.getElementById('btn-confirmar').addEventListener('click', confirmarAgendamento);
+        }
+
+        // Atualizar serviços selecionados
+        function atualizarServicos() {
+            servicosSelecionados = [];
+            let tempoTotal = 0;
+            let precoTotal = 0;
+
+            document.querySelectorAll('.servico-checkbox:checked').forEach(checkbox => {
+                const duracao = parseInt(checkbox.dataset.duracao);
+                const preco = parseFloat(checkbox.dataset.preco);
+                
+                servicosSelecionados.push({
+                    id: checkbox.value,
+                    nome: checkbox.nextElementSibling.querySelector('label').textContent,
+                    duracao: duracao,
+                    preco: preco
+                });
+
+                tempoTotal += duracao;
+                precoTotal += preco;
+            });
+
+            document.getElementById('tempo-total').textContent = tempoTotal + ' min';
+            document.getElementById('preco-total').textContent = 'R$ ' + precoTotal.toFixed(2).replace('.', ',');
+
+            // Habilitar/desabilitar botão próximo
+            document.getElementById('btn-proximo-1').disabled = servicosSelecionados.length === 0;
+        }
+
+        // Validar etapa 2
+        function validarEtapa2() {
+            const data = document.getElementById('data-agendamento').value;
+            const horario = document.getElementById('horario-agendamento').value;
+            
+            document.getElementById('btn-proximo-2').disabled = !data || !horario;
+        }
+
+        // Ir para etapa específica
+        function irParaEtapa(etapa) {
+            // Ocultar etapa atual
+            document.getElementById('etapa-' + etapaAtual).classList.add('hidden');
+            
+            // Mostrar nova etapa
+            document.getElementById('etapa-' + etapa).classList.remove('hidden');
+            
+            // Atualizar progresso
+            etapaAtual = etapa;
+            atualizarProgresso();
+        }
+
+        // Atualizar barra de progresso
+        function atualizarProgresso() {
+            const textoEtapa = document.getElementById('etapa-texto');
+            const descricaoEtapa = document.getElementById('etapa-descricao');
+            const progressBar = document.getElementById('progress-bar');
+
+            const etapas = {
+                1: { texto: 'Etapa 1 de 3', descricao: 'Serviços', progresso: '33%' },
+                2: { texto: 'Etapa 2 de 3', descricao: 'Data e Horário', progresso: '66%' },
+                3: { texto: 'Etapa 3 de 3', descricao: 'Pagamento', progresso: '100%' }
+            };
+
+            const etapa = etapas[etapaAtual];
+            textoEtapa.textContent = etapa.texto;
+            descricaoEtapa.textContent = etapa.descricao;
+            progressBar.style.width = etapa.progresso;
+        }
+
+        // Atualizar forma de pagamento
+        function atualizarFormaPagamento() {
+            const formaPagamento = document.getElementById('forma-pagamento').value;
+            const momentoPagamento = document.getElementById('momento-pagamento').value;
+            
+            // Ocultar todas as seções
+            document.getElementById('secao-dados-pix').classList.add('hidden');
+            document.getElementById('secao-dados-transferencia').classList.add('hidden');
+            document.getElementById('secao-comprovante').classList.add('hidden');
+            
+            // Resetar comprovante
+            comprovanteEnviado = false;
+            document.getElementById('input-comprovante').value = '';
+            document.getElementById('nome-arquivo').textContent = 'Nenhum arquivo selecionado';
+            document.getElementById('btn-enviar-comprovante').disabled = true;
+            document.getElementById('btn-enviar-comprovante').innerHTML = 'Enviar Comprovante';
+
+            if (!formaPagamento || !momentoPagamento) {
+                document.getElementById('btn-confirmar').disabled = true;
+                return;
+            }
+
+            // Calcular valor baseado no momento do pagamento
+            let valorTotal = servicosSelecionados.reduce((total, servico) => total + servico.preco, 0);
+            let valorPagar = valorTotal;
+
+            if (momentoPagamento === 'antecipado50') {
+                valorPagar = valorTotal * 0.5;
+            }
+
+            // Mostrar seções relevantes
+            if ((formaPagamento === 'pix' || formaPagamento === 'transferencia') && 
+                (momentoPagamento === 'antecipado50' || momentoPagamento === 'antecipado100')) {
+                
+                if (formaPagamento === 'pix') {
+                    document.getElementById('secao-dados-pix').classList.remove('hidden');
+                    document.getElementById('valor-pix').textContent = 'R$ ' + valorPagar.toFixed(2).replace('.', ',');
+                } else {
+                    document.getElementById('secao-dados-transferencia').classList.remove('hidden');
+                    document.getElementById('valor-transferencia').textContent = 'R$ ' + valorPagar.toFixed(2).replace('.', ',');
+                }
+                
+                document.getElementById('secao-comprovante').classList.remove('hidden');
+                document.getElementById('btn-confirmar').disabled = true;
+            } else {
+                // Para pagamento no local ou outras formas, habilitar confirmação
+                document.getElementById('btn-confirmar').disabled = false;
+            }
+        }
+
+        // Enviar comprovante
+        function enviarComprovante() {
+            const arquivo = document.getElementById('input-comprovante').files[0];
+            if (!arquivo) return;
+
+            const btnEnviar = document.getElementById('btn-enviar-comprovante');
+            const mensagem = document.getElementById('mensagem-comprovante');
+
+            // Simular upload
+            btnEnviar.disabled = true;
+            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Enviando...';
+
+            setTimeout(() => {
+                comprovanteEnviado = true;
+                btnEnviar.innerHTML = '<i class="fas fa-check mr-1"></i> Enviado';
+                mensagem.textContent = 'Comprovante enviado com sucesso! Agora você pode confirmar seu agendamento.';
+                mensagem.classList.remove('text-gray-300');
+                mensagem.classList.add('text-green-400');
+                
+                // Habilitar confirmação
+                document.getElementById('btn-confirmar').disabled = false;
+            }, 2000);
+        }
+
+        // Confirmar agendamento
+        function confirmarAgendamento() {
+            const formaPagamento = document.getElementById('forma-pagamento').value;
+            const momentoPagamento = document.getElementById('momento-pagamento').value;
+            
+            // Verificar se precisa de comprovante
+            if ((formaPagamento === 'pix' || formaPagamento === 'transferencia') && 
+                (momentoPagamento === 'antecipado50' || momentoPagamento === 'antecipado100') && 
+                !comprovanteEnviado) {
+                alert('Você precisa enviar o comprovante de pagamento antes de confirmar o agendamento.');
+                return;
+            }
+
+            // Coletar dados do agendamento
+            const clienteLogado = getClienteLogado();
+            const agendamento = {
+                id: Date.now(),
+                clienteId: clienteLogado.id,
+                clienteNome: clienteLogado.nome,
+                clienteEmail: clienteLogado.email,
+                clienteTelefone: clienteLogado.telefone,
+                servicos: servicosSelecionados,
+                data: document.getElementById('data-agendamento').value,
+                horario: document.getElementById('horario-agendamento').value,
+                formaPagamento: formaPagamento,
+                momentoPagamento: momentoPagamento,
+                valorTotal: servicosSelecionados.reduce((total, servico) => total + servico.preco, 0),
+                status: 'confirmado',
+                dataAgendamento: new Date().toISOString(),
+                comprovanteEnviado: comprovanteEnviado
+            };
+
+            // Salvar agendamento
+            salvarAgendamento(agendamento);
+
+            // Mostrar mensagem de sucesso
+            alert('Agendamento confirmado com sucesso! Você receberá uma confirmação em breve.');
+
+            // Redirecionar para dashboard
+            window.location.href = 'cliente-dashboard.html';
+        }
+
+        // Salvar agendamento no localStorage
+        function salvarAgendamento(agendamento) {
+            let agendamentos = JSON.parse(localStorage.getItem('agendamentos') || '[]');
+            agendamentos.push(agendamento);
+            localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+        }
+    </script>
+    
+    <!-- Scripts necessários -->
+    <script src="src/js/cliente-storage.js"></script>
+</body>
+</html>
+
