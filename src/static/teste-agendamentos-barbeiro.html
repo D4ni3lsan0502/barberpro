@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Teste de Agendamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-700 {
+            color: #cccccc;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .bg-red-600 {
+            background-color: #ff4500;
+            color: #ffffff;
+        }
+        .hover\:bg-red-700:hover {
+            background-color: #cc3700;
+        }
+        .bg-green-600 {
+            background-color: #90ee90;
+            color: #000000;
+        }
+        .hover\:bg-green-700:hover {
+            background-color: #76c776;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:ring-red-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.5);
+        }
+        .focus\:ring-green-500:focus {
+            box-shadow: 0 0 0 3px rgba(144, 238, 144, 0.5);
+        }
+        .bg-gray-100 {
+            background-color: #1a1a1a;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .hover\:text-blue-800:hover {
+            color: #cccccc;
+        }
+        .bg-blue-100 {
+            background-color: #1a1a1a;
+        }
+        .text-blue-700 {
+            color: #ffffff;
+        }
+        .bg-red-100 {
+            background-color: #1a1a1a;
+        }
+        .text-red-700 {
+            color: #ff4500;
+        }
+        .bg-green-100 {
+            background-color: #1a1a1a;
+        }
+        .text-green-700 {
+            color: #90ee90;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-slate-800 rounded-lg shadow-lg p-6 mb-8">
+                <h1 class="text-2xl font-bold text-white mb-6">Matheus Costa Barber - Teste de Agendamentos</h1>
+                
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-white mb-3">Ações de Teste</h2>
+                    <div class="flex flex-wrap gap-3">
+                        <button id="btn-criar-dados" class="px-4 py-2 bg-white text-black rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-white">
+                            Criar Dados de Teste
+                        </button>
+                        <button id="btn-limpar-dados" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            Limpar Dados de Teste
+                        </button>
+                        <button id="btn-ir-dashboard" class="px-4 py-2 bg-green-600 text-black rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            Ir para Dashboard do Barbeiro
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-white mb-3">Status</h2>
+                    <div id="status-message" class="p-4 bg-slate-900 rounded-md text-white">
+                        Aguardando ação...
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-lg font-semibold text-white mb-3">Dados Atuais</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-md font-medium text-white mb-2">Barbeiro Logado</h3>
+                            <pre id="barbeiro-info" class="p-3 bg-slate-900 rounded-md text-sm overflow-auto max-h-40 text-white">Nenhum barbeiro logado</pre>
+                        </div>
+                        <div>
+                            <h3 class="text-md font-medium text-white mb-2">Clientes</h3>
+                            <pre id="clientes-info" class="p-3 bg-slate-900 rounded-md text-sm overflow-auto max-h-40 text-white">Nenhum cliente cadastrado</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h3 class="text-md font-medium text-white mb-2">Agendamentos</h3>
+                        <pre id="agendamentos-info" class="p-3 bg-slate-900 rounded-md text-sm overflow-auto max-h-60 text-white">Nenhum agendamento cadastrado</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="index.html" class="text-white hover:text-gray-300">Voltar para a página inicial</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/dados-teste.js"></script>
+    <script>
+        document.addEventListener(
+            'DOMContentLoaded', function() {
+            // Elementos
+            const btnCriarDados = document.getElementById(
+                'btn-criar-dados');
+            const btnLimparDados = document.getElementById(
+                'btn-limpar-dados');
+            const btnIrDashboard = document.getElementById(
+                'btn-ir-dashboard');
+            const statusMessage = document.getElementById(
+                'status-message');
+            const barbeiroInfo = document.getElementById(
+                'barbeiro-info');
+            const clientesInfo = document.getElementById(
+                'clientes-info');
+            const agendamentosInfo = document.getElementById(
+                'agendamentos-info');
+
+            // Atualizar informações na tela
+            function atualizarInformacoes() {
+                try {
+                    // Barbeiro logado
+                    const barbeiroJSON = localStorage.getItem(
+                        'barberpro_usuario_logado');
+                    if (barbeiroJSON) {
+                        const barbeiro = JSON.parse(barbeiroJSON);
+                        barbeiroInfo.textContent = JSON.stringify(barbeiro, null, 2);
+                    } else {
+                        barbeiroInfo.textContent = 'Nenhum barbeiro logado';
+                    }
+
+                    // Clientes
+                    const clientesJSON = localStorage.getItem(
+                        'barberpro_clientes');
+                    if (clientesJSON) {
+                        const clientes = JSON.parse(clientesJSON);
+                        clientesInfo.textContent = JSON.stringify(clientes, null, 2);
+                    } else {
+                        clientesInfo.textContent = 'Nenhum cliente cadastrado';
+                    }
+
+                    // Agendamentos
+                    const agendamentosJSON = localStorage.getItem(
+                        'barberpro_agendamentos');
+                    if (agendamentosJSON) {
+                        const agendamentos = JSON.parse(agendamentosJSON);
+                        agendamentosInfo.textContent = JSON.stringify(agendamentos, null, 2);
+                    } else {
+                        agendamentosInfo.textContent = 'Nenhum agendamento cadastrado';
+                    }
+                } catch (e) {
+                    console.error(
+                        'Erro ao atualizar informações:', e);
+                    statusMessage.textContent = 'Erro ao atualizar informações: ' + e.message;
+                    statusMessage.className = 'p-4 bg-red-600 text-white rounded-md';
+                }
+            }
+
+            // Criar dados de teste
+            btnCriarDados.addEventListener(
+                'click', function() {
+                try {
+                    window.BarberPro.DadosTeste.criar();
+                    statusMessage.textContent = 'Dados de teste criados com sucesso!';
+                    statusMessage.className = 'p-4 bg-green-600 text-black rounded-md';
+                    atualizarInformacoes();
+                } catch (e) {
+                    console.error(
+                        'Erro ao criar dados de teste:', e);
+                    statusMessage.textContent = 'Erro ao criar dados de teste: ' + e.message;
+                    statusMessage.className = 'p-4 bg-red-600 text-white rounded-md';
+                }
+            });
+
+            // Limpar dados de teste
+            btnLimparDados.addEventListener(
+                'click', function() {
+                try {
+                    window.BarberPro.DadosTeste.limpar();
+                    statusMessage.textContent = 'Dados de teste removidos com sucesso!';
+                    statusMessage.className = 'p-4 bg-white text-black rounded-md';
+                    atualizarInformacoes();
+                } catch (e) {
+                    console.error(
+                        'Erro ao limpar dados de teste:', e);
+                    statusMessage.textContent = 'Erro ao limpar dados de teste: ' + e.message;
+                    statusMessage.className = 'p-4 bg-red-600 text-white rounded-md';
+                }
+            });
+
+            // Ir para dashboard do barbeiro
+            btnIrDashboard.addEventListener(
+                'click', function() {
+                window.location.href = 'barbeiro-dashboard.html';
+            });
+
+            // Inicializar
+            atualizarInformacoes();
+        });
+    </script>
+</body>
+</html>
+
+

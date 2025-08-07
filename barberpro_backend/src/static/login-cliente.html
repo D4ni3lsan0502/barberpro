@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Costa Barber - Login Cliente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .bg-gray-100 {
+            background-color: #000000;
+        }
+        .bg-white {
+            background-color: #1a1a1a;
+        }
+        .text-gray-800 {
+            color: #ffffff;
+        }
+        .text-gray-600 {
+            color: #cccccc;
+        }
+        .border-gray-200 {
+            border-color: #333333;
+        }
+        .text-blue-600 {
+            color: #ffffff;
+        }
+        .border-blue-600 {
+            border-color: #ffffff;
+        }
+        .text-gray-500 {
+            color: #aaaaaa;
+        }
+        .hover\:text-gray-700:hover {
+            color: #ffffff;
+        }
+        .border-gray-300 {
+            border-color: #333333;
+        }
+        .focus\:ring-blue-500:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .focus\:border-blue-500:focus {
+            border-color: #ffffff;
+        }
+        .bg-blue-600 {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .hover\:bg-blue-700:hover {
+            background-color: #cccccc;
+        }
+        .bg-slate-800 {
+            background-color: #1a1a1a;
+        }
+        .hover\:bg-slate-900:hover {
+            background-color: #333333;
+        }
+        .shadow-lg {
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <div class="text-center mb-8">
+                    <img src="img/matheus_costa_barber_logo.png" alt="Matheus Costa Barber Logo" class="h-16 mx-auto mb-4">
+                    <h1 class="text-3xl font-bold text-white">Login do Cliente</h1>
+                    <p class="text-gray-400 mt-2">Acesse sua conta para agendar serviços</p>
+                </div>
+                
+                <form id="login-cliente-form">
+                    <div class="mb-4">
+                        <label for="email-cliente" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="senha-cliente" class="block text-sm font-medium text-gray-300 mb-1">Senha</label>
+                        <input type="password" id="senha-cliente" class="w-full border border-gray-700 rounded-md px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="••••••••" required>
+                    </div>
+                    <div class="mb-6">
+                        <button type="submit" class="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-gray-300 transition duration-300 font-semibold">
+                            Entrar
+                        </button>
+                    </div>
+                </form>
+                <p class="text-center text-gray-400 text-sm">
+                    Não tem uma conta? <a href="cadastro-cliente.html" class="text-white hover:underline">Cadastre-se aqui</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <p class="text-sm text-gray-400">
+                &copy; 2025 Matheus Costa Barber - Todos os direitos reservados
+            </p>
+        </div>
+    </div>
+    
+    <script src="src/js/api.js"></script>
+    <script>
+        document.addEventListener(
+            'DOMContentLoaded', function() {
+            document.getElementById(
+                'login-cliente-form').addEventListener(
+                'submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById(
+                    'email-cliente').value;
+                const senha = document.getElementById(
+                    'senha-cliente').value;
+
+                try {
+                    const response = await API.auth.login(email, senha, 'client');
+                    if (response.access_token) {
+                        window.location.href = 'cliente-dashboard.html';
+                    } else {
+                        alert('Email ou senha incorretos. Por favor, tente novamente.');
+                    }
+                } catch (error) {
+                    alert('Erro ao fazer login: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+

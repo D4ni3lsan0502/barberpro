@@ -1,0 +1,194 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000000; /* Fundo preto */
+    color: #ffffff; /* Texto branco */
+}
+
+.barber-card {
+    background: #1a1a1a; /* Cinza escuro para cards */
+    box-shadow: none; /* Remover sombras */
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.calendar-day {
+    transition: all 0.2s ease;
+}
+
+.calendar-day:hover:not(.disabled):not(.selected) {
+    background-color: #333333; /* Cinza mais claro no hover */
+}
+
+.selected {
+    background-color: #ffffff; /* Branco para seleção */
+    color: #000000; /* Texto preto na seleção */
+}
+
+.disabled {
+    color: #aaaaaa;
+    cursor: not-allowed;
+}
+
+.time-slot {
+    transition: all 0.2s ease;
+}
+
+.time-slot:hover:not(.booked) {
+    background-color: #ffffff; /* Branco no hover */
+    color: #000000; /* Texto preto no hover */
+}
+
+.booked {
+    background-color: #ff4500; /* Laranja avermelhado para agendado */
+    color: white;
+    cursor: not-allowed;
+}
+
+.pix-code {
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+/* Animation for notification */
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.notification {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.paid {
+    background-color: #90ee90; /* Verde claro */
+    color: #000000; /* Texto preto */
+}
+
+.pending {
+    background-color: #ffd700; /* Amarelo dourado */
+    color: #000000; /* Texto preto */
+}
+
+.canceled {
+    background-color: #ff4500; /* Laranja avermelhado */
+    color: #ffffff; /* Texto branco */
+}
+
+/* Mobile menu animation */
+#mobile-menu {
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Floating action button */
+.fab {
+    transition: all 0.3s ease;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+    
+    .calendar-container {
+        margin-top: 1.5rem;
+    }
+}
+
+
+
+
+/* Styles for client-specific pages */
+.client-form-container {
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+.client-dashboard-card {
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+.client-appointment-card {
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+.client-profile-section {
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+.client-settings-section {
+    background-color: #1a1a1a;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+/* General input and button styles for client pages */
+.client-input {
+    background-color: #000000;
+    border-color: #333333;
+    color: #ffffff;
+}
+
+.client-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.client-button-primary {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.client-button-primary:hover {
+    background-color: #cccccc;
+}
+
+.client-button-secondary {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.client-button-secondary:hover {
+    background-color: #555555;
+}
+
+
+
+
+/* Styles for address fields and payment options */
+.address-field,
+.payment-option {
+    background-color: #1a1a1a;
+    border-color: #333333;
+    color: #ffffff;
+}
+
+.address-field:focus,
+.payment-option:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+
